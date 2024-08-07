@@ -113,8 +113,24 @@ void MainWindow::onGraphicsViewMousePressed(QMouseEvent *event)
     if (drawing && event->button() == Qt::LeftButton)
     {
         origin = ui->graphicsView->mapToScene(event->pos());
+        qDebug() << "Mouse pressed at (view coordinates):" << event->pos();
+        qDebug() << "Mouse pressed at (scene coordinates):" << origin;
+
         currentItem = new CustomShapeItem(shapeType);
         currentItem->setPos(origin);
+
+        switch (shapeType)
+        {
+            case CustomShapeItem::Rectangle:
+            case CustomShapeItem::Ellipse:
+                currentItem->setShapeRect(QRectF(origin, QSizeF(0, 0)));
+                break;
+            case CustomShapeItem::Line:
+            case CustomShapeItem::Arrow:
+                currentItem->setShapeLine(QLineF(origin, origin));
+                break;
+        }
+
         scene->addItem(currentItem);
     }
 }
@@ -124,8 +140,20 @@ void MainWindow::onGraphicsViewMouseMoved(QMouseEvent *event)
     if (drawing && currentItem)
     {
         QPointF currentPos = ui->graphicsView->mapToScene(event->pos());
-        QRectF newRect(origin, currentPos);
-        currentItem->setShapeRect(newRect.normalized());
+        qDebug() << "Updating shape to:" << currentPos;
+
+        switch (shapeType)
+        {
+            case CustomShapeItem::Rectangle:
+            case CustomShapeItem::Ellipse:
+                currentItem->setShapeRect(QRectF(origin, currentPos).normalized());
+                break;
+            case CustomShapeItem::Line:
+            case CustomShapeItem::Arrow:
+                currentItem->setShapeLine(QLineF(origin, currentPos));
+                break;
+        }
+
         scene->update();
     }
 }

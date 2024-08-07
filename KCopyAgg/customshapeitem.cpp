@@ -1,6 +1,7 @@
 #include "customshapeitem.h"
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
+#include <QStyleOptionGraphicsItem>
 
 CustomShapeItem::CustomShapeItem(ShapeType shapeType, QGraphicsItem *parent)
     : QGraphicsItem(parent), shapeType(shapeType)
@@ -10,31 +11,43 @@ CustomShapeItem::CustomShapeItem(ShapeType shapeType, QGraphicsItem *parent)
 
 QRectF CustomShapeItem::boundingRect() const
 {
-    return shapeRect;
+    if (shapeType == Line || shapeType == Arrow)
+    {
+        return QRectF(shapeLine.p1(), shapeLine.p2()).normalized();
+    }
+    else
+    {
+        return shapeRect;
+    }
 }
 
-void CustomShapeItem::setShapeRect(const QRectF &rect)
+QPainterPath CustomShapeItem::shape() const
 {
-    prepareGeometryChange();
-    shapeRect = rect;
-}
-
-CustomShapeItem::ShapeType CustomShapeItem::getShapeType() const
-{
-    return shapeType;
+    QPainterPath path;
+    switch (shapeType)
+    {
+        case Rectangle:
+            path.addRect(shapeRect);
+            break;
+        case Ellipse:
+            path.addEllipse(shapeRect);
+            break;
+        case Line:
+            path.moveTo(shapeLine.p1());
+            path.lineTo(shapeLine.p2());
+            break;
+        case Arrow:
+            path.moveTo(shapeLine.p1());
+            path.lineTo(shapeLine.p2());
+            // Add arrowhead shape logic if necessary
+            break;
+    }
+    return path;
 }
 
 void CustomShapeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    Q_UNUSED(option);
     Q_UNUSED(widget);
-    QPen pen(Qt::black);
-    if (isSelected())
-    {
-        pen.setStyle(Qt::DashLine);
-    }
-    painter->setPen(pen);
-    painter->setBrush(Qt::NoBrush);
 
     switch (shapeType)
     {
@@ -45,13 +58,34 @@ void CustomShapeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
             painter->drawEllipse(shapeRect);
             break;
         case Line:
-            painter->drawLine(shapeRect.topLeft(), shapeRect.bottomRight());
+            painter->drawLine(shapeLine.p1(), shapeLine.p2());
             break;
         case Arrow:
-            painter->drawLine(shapeRect.topLeft(), shapeRect.bottomRight());
+            painter->drawLine(shapeLine.p1(), shapeLine.p2());
             // Add arrowhead drawing logic here
             break;
     }
+
+    if (option->state & QStyle::State_Selected)
+    {
+        painter->setPen(QPen(Qt::DashLine));
+        painter->setBrush(Qt::NoBrush);
+        painter->drawRect(boundingRect());
+    }
+}
+
+void CustomShapeItem::setShapeRect(const QRectF &rect)
+{
+    prepareGeometryChange();
+    shapeRect = rect;
+    update();
+}
+
+void CustomShapeItem::setShapeLine(const QLineF &line)
+{
+    prepareGeometryChange();
+    shapeLine = line;
+    update();
 }
 
 void CustomShapeItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

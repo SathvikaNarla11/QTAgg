@@ -13,7 +13,9 @@ public:
     CustomShapeItem(ShapeType shapeType, QGraphicsItem *parent = nullptr);
 
     QRectF boundingRect() const override;
+    QPainterPath shape() const override;
     void setShapeRect(const QRectF &rect);
+    void setShapeLine(const QLineF &line);
     ShapeType getShapeType() const;
 
 protected:
@@ -25,6 +27,7 @@ protected:
 private:
     ShapeType shapeType;
     QRectF shapeRect;
+    QLineF shapeLine;
 };
 
 #endif // CUSTOMSHAPEITEM_H
