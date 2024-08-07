@@ -31,6 +31,7 @@ public:
 private slots:
     void on_pushButtonList1_clicked();
     void on_pushButtonList2_clicked();
+    void on_pushButtonPaint_clicked();
 //        void undo();
 //        void redo();
 
@@ -38,7 +39,6 @@ private slots:
     void on_pushButtonEllipse_clicked();
     void on_pushButtonLine_clicked();
     void on_pushButtonArrow_clicked();
-
 
     void onGraphicsViewMousePressed(QMouseEvent *event);
     void onGraphicsViewMouseMoved(QMouseEvent *event);
@@ -48,23 +48,19 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+    int n;
 
     IconListModel *model;
     CustomDelegate *delegate;
-    IconListModel *model2;
-    CustomDelegate *delegate2;
 
     QGraphicsScene *scene;
     QSize iconSize;
     QUndoStack *undoStack;
     CustomShapeItem *currentItem = nullptr;
-////    CustomGraphicsView *graphicsView;
     bool drawing;
     CustomShapeItem::ShapeType shapeType;
     QPointF origin;
 
-//    void onGraphicsViewMousePressed(QMouseEvent *event);
-//    void onGraphicsViewMouseMoved(QMouseEvent *event);
-//    void onGraphicsViewMouseReleased(QMouseEvent *event);
+    void updateListView();
 };
 #endif // MAINWINDOW_H

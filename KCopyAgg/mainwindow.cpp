@@ -6,44 +6,29 @@
 #include <QMimeData>
 #include <QIcon>
 
-
+int n;
 MainWindow::MainWindow(QWidget *parent)
     :QMainWindow(parent)
     ,ui(new Ui::MainWindow)
     ,model(new IconListModel(this))
-    ,model2(new IconListModel(this))
     ,delegate(new CustomDelegate(38, this))
-    ,delegate2(new CustomDelegate(38, this))
     ,scene(new QGraphicsScene(this))
     ,iconSize(38, 38)
+    ,n(0)
 {
     ui->setupUi(this);
-
-    /****************** LISTVIEW 1*****************/
+    ui->groupBoxPaint->hide();
     QStringList labels = {"Item 1", "Item 2", "Item 3"};
     QList<QIcon> icons;
-    icons <<QIcon(":/Images/Icons/list1-1.png")
-         <<QIcon(":/Images/Icons/list1-2.png")
-        <<QIcon(":/Images/Icons/list1-3.png");
+    icons << QIcon(":/Images/Icons/list1-1.png")
+          << QIcon(":/Images/Icons/list1-2.png")
+          << QIcon(":/Images/Icons/list1-3.png");
 
     model->setData(labels, icons);
     ui->listView->setModel(model);
     ui->listView->setItemDelegate(delegate);
     ui->listView->setDragEnabled(true);
     ui->listView->setIconSize(iconSize);
-    /**********************************************/
-
-    /****************** LISTVIEW 2*****************/
-    QStringList labels2 = {"Item 1", "Item 2"};
-    QList<QIcon> icons2;
-    icons2 <<QIcon(":/Images/Icons/list2-1.png")
-          <<QIcon(":/Images/Icons/list2-1.png");
-
-    model2->setData(labels2, icons2);
-    ui->listView2->setModel(model2);
-    ui->listView2->setItemDelegate(delegate2);
-    ui->listView2->setDragEnabled(true);
-    ui->listView2->setIconSize(iconSize);
 
     ui->graphicsView->setScene(scene);
     scene->setSceneRect(0, 0, ui->graphicsView->width(), ui->graphicsView->height());
@@ -63,19 +48,59 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+void MainWindow::updateListView()
+{
+    ui->groupBoxPaint->hide();
+    QStringList labels = {"Item 1", "Item 2", "Item 3"};
+    QList<QIcon> icons;
+    icons << QIcon(":/Images/Icons/list1-1.png")
+          << QIcon(":/Images/Icons/list1-2.png")
+          << QIcon(":/Images/Icons/list1-3.png");
+
+    QStringList labels2 = {"Item 1", "Item 2"};
+    QList<QIcon> icons2;
+    icons2 << QIcon(":/Images/Icons/list2-1.png")
+           << QIcon(":/Images/Icons/list2-2.png");
+
+
+    model->clear();
+    switch (n)
+    {
+        case 1:
+            model->setData(labels, icons);
+            ui->listView->setModel(model);
+            break;
+        case 2:
+            model->setData(labels2, icons2);
+            ui->listView->setModel(model);
+            break;
+        case 3:
+            ui->groupBoxPaint->show();
+            break;
+        default:
+            break;
+    }
+    ui->listView->setItemDelegate(delegate);
+    ui->listView->setDragEnabled(true);
+    ui->listView->setIconSize(iconSize);
+}
+
 void MainWindow::on_pushButtonList1_clicked()
 {
-    qDebug()<<"pbtn1";
-    ui->listView2->hide();
-    ui->listView->show();
+    n = 1;
+    updateListView();
 }
 void MainWindow::on_pushButtonList2_clicked()
 {
-    qDebug()<<"pbtn1";
-    ui->listView->hide();
-    ui->listView2->show();
+    n = 2;
+    updateListView();
 }
 
+void MainWindow::on_pushButtonPaint_clicked()
+{
+    n = 3;
+    updateListView();
+}
 
 void MainWindow::on_pushButtonRect_clicked()
 {
@@ -153,7 +178,6 @@ void MainWindow::onGraphicsViewMouseMoved(QMouseEvent *event)
                 currentItem->setShapeLine(QLineF(origin, currentPos));
                 break;
         }
-
         scene->update();
     }
 }
@@ -166,3 +190,5 @@ void MainWindow::onGraphicsViewMouseReleased(QMouseEvent *event)
         currentItem = nullptr;
     }
 }
+
+
