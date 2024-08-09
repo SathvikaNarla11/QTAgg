@@ -6,196 +6,585 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>941</width>
-    <height>637</height>
+    <width>1119</width>
+    <height>695</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QGroupBox" name="groupBox">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>46</width>
-      <height>499</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>46</width>
-      <height>499</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>46</width>
-      <height>499</height>
-     </size>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QGroupBox
-{
-        border: 1px solid  rgb(0, 0, 0);
- }</string>
-    </property>
-    <property name="title">
-     <string/>
-    </property>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>1</x>
-       <y>0</y>
-       <width>86</width>
-       <height>128</height>
-      </rect>
-     </property>
-     <layout class="QFormLayout" name="formLayout">
-      <property name="labelAlignment">
-       <set>Qt::AlignCenter</set>
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <item>
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>0</height>
+       </size>
       </property>
-      <property name="horizontalSpacing">
+      <property name="maximumSize">
+       <size>
+        <width>100</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QGroupBox" name="groupBox">
+           <property name="minimumSize">
+            <size>
+             <width>48</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>48</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="title">
+            <string/>
+           </property>
+           <widget class="QWidget" name="layoutWidget">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>47</width>
+              <height>591</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="pushButtonList1">
+               <property name="minimumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Icons/DragDropIcons/BtnIcons/btn1.png</normaloff>:/Icons/DragDropIcons/BtnIcons/btn1.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>45</width>
+                 <height>45</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButtonList2">
+               <property name="minimumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Icons/DragDropIcons/BtnIcons/btn2.png</normaloff>:/Icons/DragDropIcons/BtnIcons/btn2.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>47</width>
+                 <height>45</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButtonList3">
+               <property name="minimumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Icons/DragDropIcons/BtnIcons/btn3.png</normaloff>:/Icons/DragDropIcons/BtnIcons/btn3.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>47</width>
+                 <height>45</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButtonList4">
+               <property name="minimumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Icons/DragDropIcons/BtnIcons/btn4.png</normaloff>:/Icons/DragDropIcons/BtnIcons/btn4.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>45</width>
+                 <height>45</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButtonList5">
+               <property name="minimumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Icons/DragDropIcons/BtnIcons/btn5.png</normaloff>:/Icons/DragDropIcons/BtnIcons/btn5.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>47</width>
+                 <height>45</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButtonList6">
+               <property name="minimumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Icons/DragDropIcons/BtnIcons/btn6.png</normaloff>:/Icons/DragDropIcons/BtnIcons/btn6.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>45</width>
+                 <height>45</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButtonList7">
+               <property name="minimumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Icons/DragDropIcons/BtnIcons/btn7.png</normaloff>:/Icons/DragDropIcons/BtnIcons/btn7.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>47</width>
+                 <height>45</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButtonList8">
+               <property name="minimumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Icons/DragDropIcons/BtnIcons/btn8.png</normaloff>:/Icons/DragDropIcons/BtnIcons/btn8.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>47</width>
+                 <height>45</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButtonList9">
+               <property name="minimumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Icons/DragDropIcons/BtnIcons/btn9.png</normaloff>:/Icons/DragDropIcons/BtnIcons/btn9.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>47</width>
+                 <height>45</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButtonList10">
+               <property name="minimumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Icons/DragDropIcons/BtnIcons/btn10.png</normaloff>:/Icons/DragDropIcons/BtnIcons/btn10.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>45</width>
+                 <height>45</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButtonList11">
+               <property name="minimumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Icons/DragDropIcons/BtnIcons/btn11.png</normaloff>:/Icons/DragDropIcons/BtnIcons/btn11.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>47</width>
+                 <height>45</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButtonList12">
+               <property name="minimumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Icons/DragDropIcons/BtnIcons/btn12.png</normaloff>:/Icons/DragDropIcons/BtnIcons/btn12.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>45</width>
+                 <height>45</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButtonList13">
+               <property name="minimumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Icons/DragDropIcons/BtnIcons/btn13.png</normaloff>:/Icons/DragDropIcons/BtnIcons/btn13.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>47</width>
+                 <height>45</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButtonPaint">
+               <property name="minimumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>42</width>
+                 <height>42</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Icons/DragDropIcons/BtnIcons/paintBucket.png</normaloff>:/Icons/DragDropIcons/BtnIcons/paintBucket.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>47</width>
+                 <height>45</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_3">
+           <property name="title">
+            <string/>
+           </property>
+           <widget class="QListView" name="listView">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>46</width>
+              <height>591</height>
+             </rect>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>46</width>
+              <height>591</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>46</width>
+              <height>591</height>
+             </size>
+            </property>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTabWidget" name="tabWidget_2">
+      <property name="currentIndex">
        <number>0</number>
       </property>
-      <property name="verticalSpacing">
-       <number>0</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QPushButton" name="pushButtonList1">
-        <property name="minimumSize">
-         <size>
-          <width>42</width>
-          <height>42</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>42</width>
-          <height>42</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="Resources.qrc">
-          <normaloff>:/Images/Icons/btn1.png</normaloff>:/Images/Icons/btn1.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>45</width>
-          <height>45</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QPushButton" name="pushButtonList2">
-        <property name="minimumSize">
-         <size>
-          <width>42</width>
-          <height>42</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>42</width>
-          <height>42</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="Resources.qrc">
-          <normaloff>:/Images/Icons/btn2.png</normaloff>:/Images/Icons/btn2.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>47</width>
-          <height>45</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QPushButton" name="pushButtonPaint">
-        <property name="minimumSize">
-         <size>
-          <width>42</width>
-          <height>42</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>42</width>
-          <height>42</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="Resources.qrc">
-          <normaloff>:/Images/Icons/paintButton.png</normaloff>:/Images/Icons/paintButton.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>47</width>
-          <height>45</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </widget>
-   <widget class="QListView" name="listView">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>0</y>
-      <width>46</width>
-      <height>499</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>46</width>
-      <height>499</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>46</width>
-      <height>499</height>
-     </size>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="groupBoxPaint">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>0</y>
-      <width>47</width>
-      <height>499</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string/>
-    </property>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>45</width>
-       <height>380</height>
-      </rect>
-     </property>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Tab 1</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QTabWidget" name="tabWidget">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tab">
+           <attribute name="title">
+            <string>Tab 1</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout">
+            <item row="0" column="0">
+             <widget class="CustomGraphicsView" name="graphicsView">
+              <property name="minimumSize">
+               <size>
+                <width>600</width>
+                <height>400</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>600</width>
+                <height>400</height>
+               </size>
+              </property>
+              <property name="mouseTracking">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_2">
+           <attribute name="title">
+            <string>Tab 2</string>
+           </attribute>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_4">
+       <attribute name="title">
+        <string>Tab 2</string>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+    <item>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
        <number>0</number>
@@ -224,7 +613,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset>
           <normaloff>:/Images/Icons/rectangle.png</normaloff>:/Images/Icons/rectangle.png</iconset>
         </property>
         <property name="iconSize">
@@ -259,7 +648,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset>
           <normaloff>:/Images/Icons/ellipse.png</normaloff>:/Images/Icons/ellipse.png</iconset>
         </property>
         <property name="iconSize">
@@ -294,7 +683,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="Resources.qrc">
+         <iconset>
           <normaloff>:/Images/Icons/line.png</normaloff>:/Images/Icons/line.png</iconset>
         </property>
         <property name="iconSize">
@@ -456,78 +845,22 @@
        </widget>
       </item>
      </layout>
-    </widget>
-   </widget>
-   <widget class="QTabWidget" name="tabWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>0</y>
-      <width>651</width>
-      <height>531</height>
-     </rect>
-    </property>
-    <property name="currentIndex">
-     <number>0</number>
-    </property>
-    <widget class="QWidget" name="tab_3">
-     <attribute name="title">
-      <string>Tab 1</string>
-     </attribute>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QTabWidget" name="tabWidget">
-        <property name="currentIndex">
-         <number>0</number>
-        </property>
-        <widget class="QWidget" name="tab">
-         <attribute name="title">
-          <string>Tab 1</string>
-         </attribute>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item>
-           <widget class="CustomGraphicsView" name="graphicsView">
-            <property name="minimumSize">
-             <size>
-              <width>600</width>
-              <height>400</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>600</width>
-              <height>400</height>
-             </size>
-            </property>
-            <property name="mouseTracking">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="tab_2">
-         <attribute name="title">
-          <string>Tab 2</string>
-         </attribute>
-        </widget>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="tab_4">
-     <attribute name="title">
-      <string>Tab 2</string>
-     </attribute>
-    </widget>
-   </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBoxPaint">
+      <property name="title">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>941</width>
+     <width>1119</width>
      <height>21</height>
     </rect>
    </property>
@@ -606,7 +939,7 @@
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset resource="Resources.qrc">
+    <iconset>
      <normaloff>:/Images/Icons/save.png</normaloff>:/Images/Icons/save.png</iconset>
    </property>
    <property name="text">
@@ -615,7 +948,7 @@
   </action>
   <action name="actionSave_As">
    <property name="icon">
-    <iconset resource="Resources.qrc">
+    <iconset>
      <normaloff>:/Images/Icons/icons8-save-as-48.png</normaloff>:/Images/Icons/icons8-save-as-48.png</iconset>
    </property>
    <property name="text">
@@ -624,7 +957,7 @@
   </action>
   <action name="actionClose">
    <property name="icon">
-    <iconset resource="Resources.qrc">
+    <iconset>
      <normaloff>:/Images/Icons/icons8-delete-file-48.png</normaloff>:/Images/Icons/icons8-delete-file-48.png</iconset>
    </property>
    <property name="text">
@@ -633,7 +966,7 @@
   </action>
   <action name="actionUndo">
    <property name="icon">
-    <iconset resource="Resources.qrc">
+    <iconset>
      <normaloff>:/Images/Icons/icons8-undo-48.png</normaloff>:/Images/Icons/icons8-undo-48.png</iconset>
    </property>
    <property name="text">
@@ -642,7 +975,7 @@
   </action>
   <action name="actionRedo">
    <property name="icon">
-    <iconset resource="Resources.qrc">
+    <iconset>
      <normaloff>:/Images/Icons/icons8-redo-48.png</normaloff>:/Images/Icons/icons8-redo-48.png</iconset>
    </property>
    <property name="text">
@@ -651,7 +984,7 @@
   </action>
   <action name="actionCut">
    <property name="icon">
-    <iconset resource="Resources.qrc">
+    <iconset>
      <normaloff>:/Images/Icons/icons8-cut-48.png</normaloff>:/Images/Icons/icons8-cut-48.png</iconset>
    </property>
    <property name="text">
@@ -660,7 +993,7 @@
   </action>
   <action name="actionCopy">
    <property name="icon">
-    <iconset resource="Resources.qrc">
+    <iconset>
      <normaloff>:/Images/Icons/icons8-copy-48.png</normaloff>:/Images/Icons/icons8-copy-48.png</iconset>
    </property>
    <property name="text">
@@ -669,7 +1002,7 @@
   </action>
   <action name="actionPaste">
    <property name="icon">
-    <iconset resource="Resources.qrc">
+    <iconset>
      <normaloff>:/Images/Icons/icons8-paste-48.png</normaloff>:/Images/Icons/icons8-paste-48.png</iconset>
    </property>
    <property name="text">
@@ -678,7 +1011,7 @@
   </action>
   <action name="actionDelete">
    <property name="icon">
-    <iconset resource="Resources.qrc">
+    <iconset>
      <normaloff>:/Images/Icons/icons8-delete-file-48.png</normaloff>:/Images/Icons/icons8-delete-file-48.png</iconset>
    </property>
    <property name="text">
@@ -687,7 +1020,7 @@
   </action>
   <action name="actionZoom_In">
    <property name="icon">
-    <iconset resource="Resources.qrc">
+    <iconset>
      <normaloff>:/Images/Icons/icons8-zoom-in-48.png</normaloff>:/Images/Icons/icons8-zoom-in-48.png</iconset>
    </property>
    <property name="text">
@@ -696,7 +1029,7 @@
   </action>
   <action name="actionZoom_Out">
    <property name="icon">
-    <iconset resource="Resources.qrc">
+    <iconset>
      <normaloff>:/Images/Icons/icons8-zoom-out-48.png</normaloff>:/Images/Icons/icons8-zoom-out-48.png</iconset>
    </property>
    <property name="text">

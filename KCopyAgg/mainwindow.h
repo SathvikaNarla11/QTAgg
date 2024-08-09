@@ -29,9 +29,9 @@ public:
     void addItem(const QString &itemText);
 
 private slots:
-    void on_pushButtonList1_clicked();
-    void on_pushButtonList2_clicked();
-    void on_pushButtonPaint_clicked();
+//    void on_pushButtonList1_clicked();
+//    void on_pushButtonList2_clicked();
+//    void on_pushButtonPaint_clicked();
 //        void undo();
 //        void redo();
 
@@ -43,6 +43,8 @@ private slots:
     void onGraphicsViewMousePressed(QMouseEvent *event);
     void onGraphicsViewMouseMoved(QMouseEvent *event);
     void onGraphicsViewMouseReleased(QMouseEvent *event);
+    void onPushButtonClicked();
+
 
 protected:
 
@@ -61,6 +63,6 @@ private:
     CustomShapeItem::ShapeType shapeType;
     QPointF origin;
 
-    void updateListView();
+    void updateListView(int n);
 };
 #endif // MAINWINDOW_H
