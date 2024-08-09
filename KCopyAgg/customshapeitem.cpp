@@ -13,7 +13,7 @@ QRectF CustomShapeItem::boundingRect() const
 {
     if (shapeType == Line || shapeType == Arrow)
     {
-        return QRectF(shapeLine.p1(), shapeLine.p2()).normalized();
+        return QRectF(shapeLine.p1(), shapeLine.p2())/*.normalized()*/;
     }
     else
     {

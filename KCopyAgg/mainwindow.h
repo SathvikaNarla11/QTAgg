@@ -46,6 +46,8 @@ private slots:
     void onPushButtonClicked();
 
 
+    void on_tabWidget_tabBarClicked(int index);
+
 protected:
 
 private:
@@ -53,7 +55,9 @@ private:
     int n;
 
     IconListModel *model;
+    IconListModel *modelBtn;
     CustomDelegate *delegate;
+    CustomDelegate *delegateBtn;
 
     QGraphicsScene *scene;
     QSize iconSize;

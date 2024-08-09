@@ -5,13 +5,16 @@
 #include <QDebug>
 #include <QMimeData>
 #include <QIcon>
+#include <QTimer>
 
 int n;
 MainWindow::MainWindow(QWidget *parent)
     :QMainWindow(parent)
     ,ui(new Ui::MainWindow)
     ,model(new IconListModel(this))
+    ,modelBtn(new IconListModel(this))
     ,delegate(new CustomDelegate(38, this))
+    ,delegateBtn(new CustomDelegate(34, this))
     ,scene(new QGraphicsScene(this))
     ,iconSize(38, 38)
     ,n(0)
@@ -35,12 +38,21 @@ MainWindow::MainWindow(QWidget *parent)
     ui->listView->setDragEnabled(true);
     ui->listView->setIconSize(iconSize);
 
+    QSize iconSizeBtn(30, 30);
+    ui->listViewBtn->setParent(ui->groupBoxPaint);
+    QStringList labels14 = {"Item 1"};
+    QList<QIcon> icons14;
+    icons14 << QIcon(":/Icons/DragDropIcons/Btn14-List/symbols_open_to_select_model.png");
+    modelBtn->setData(labels14, icons14);
+    ui->listViewBtn->setModel(modelBtn);
+    ui->listViewBtn->setItemDelegate(delegateBtn);
+    ui->listViewBtn->setDragEnabled(true);
+    ui->listViewBtn->setIconSize(iconSizeBtn);
+
 
     ui->graphicsView->setScene(scene);
     scene->setSceneRect(0, 0, ui->graphicsView->width(), ui->graphicsView->height());
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
-    ui->graphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-    ui->graphicsView->setResizeAnchor(QGraphicsView::AnchorUnderMouse);
     ui->graphicsView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
     /**********************************************/
@@ -92,113 +104,48 @@ void MainWindow::updateListView(int index)
     QStringList labels3 = {"Item 1", "Item 2","Item 3", "Item 4", "Item 5"};
     QList<QIcon> icons3;
     icons3  <<QIcon(":/Icons/DragDropIcons/Btn3-List/place_a_conveyor_in_the_flow.png")
-            <<QIcon(":/Icons/DragDropIcons/Btn3-List/place_a_front_end_loader_in_the_flow.png")
-            <<QIcon(":/Icons/DragDropIcons/Btn3-List/place_a_haul_truck_in_the_flow.png")
-            <<QIcon(":/Icons/DragDropIcons/Btn3-List/place_a_reversible_conveyor_in_the_flow.png")
-            <<QIcon(":/Icons/DragDropIcons/Btn3-List/place_a_stock_pile_in_the_flow.png");
+           <<QIcon(":/Icons/DragDropIcons/Btn3-List/place_a_front_end_loader_in_the_flow.png")
+          <<QIcon(":/Icons/DragDropIcons/Btn3-List/place_a_haul_truck_in_the_flow.png")
+         <<QIcon(":/Icons/DragDropIcons/Btn3-List/place_a_reversible_conveyor_in_the_flow.png")
+        <<QIcon(":/Icons/DragDropIcons/Btn3-List/place_a_stock_pile_in_the_flow.png");
 
     QStringList labels4 = {"Item 1", "Item 2","Item 3", "Item 4", "Item 5"};
     QList<QIcon> icons4;
     icons4  <<QIcon(":/Icons/DragDropIcons/Btn4-List/place_a_splitter_in_the_flow.png")
-            <<QIcon(":/Icons/DragDropIcons/Btn4-List/place_a_three_way_splitter_in_the_flow.png")
-            <<QIcon(":/Icons/DragDropIcons/Btn4-List/place_a_flop_gate_in_the_flow.png")
-            <<QIcon(":/Icons/DragDropIcons/Btn4-List/place_an_overflow_box_in_the_flow.png")
-            <<QIcon(":/Icons/DragDropIcons/Btn4-List/place_an_overflow_box_in_the_flow.png");
+           <<QIcon(":/Icons/DragDropIcons/Btn4-List/place_a_three_way_splitter_in_the_flow.png")
+          <<QIcon(":/Icons/DragDropIcons/Btn4-List/place_a_flop_gate_in_the_flow.png")
+         <<QIcon(":/Icons/DragDropIcons/Btn4-List/place_an_overflow_box_in_the_flow.png")
+        <<QIcon(":/Icons/DragDropIcons/Btn4-List/place_an_overflow_box_in_the_flow.png");
 
     QStringList labels5 = {"Item 1", "Item 2","Item 3", "Item 4", "Item 5"};
     QList<QIcon> icons5;
     icons5  <<QIcon(":/Icons/DragDropIcons/Btn5-List/place_a_jaw_crusher_in_the_flow.png")
-            <<QIcon(":/Icons/DragDropIcons/Btn5-List/place_a_cone_crusher_in_the_flow.png")
-            <<QIcon(":/Icons/DragDropIcons/Btn5-List/place_an_hsi_crusher_in_the_flow.png")
-            <<QIcon(":/Icons/DragDropIcons/Btn5-List/place_a_roll_crusher_in_the_flow.png")
-            <<QIcon(":/Icons/DragDropIcons/Btn5-List/place_a_mill_crusher_in_the_flow.png");
+           <<QIcon(":/Icons/DragDropIcons/Btn5-List/place_a_cone_crusher_in_the_flow.png")
+          <<QIcon(":/Icons/DragDropIcons/Btn5-List/place_an_hsi_crusher_in_the_flow.png")
+         <<QIcon(":/Icons/DragDropIcons/Btn5-List/place_a_roll_crusher_in_the_flow.png")
+        <<QIcon(":/Icons/DragDropIcons/Btn5-List/place_a_mill_crusher_in_the_flow.png");
 
+    QStringList labels6 = {"Item 1", "Item 2", "Item 3","Item 4", "Item 5", "Item 6", "Item 7", "Item 8", "Item 9"};
+    QList<QIcon> icons6;
+    icons6  <<QIcon(":/Icons/DragDropIcons/Btn6-List/grizzly_feeder_vibrating_scalper.png")
+           <<QIcon(":/Icons/DragDropIcons/Btn6-List/1deck.png")
+          <<QIcon(":/Icons/DragDropIcons/Btn6-List/2deck.png")
+         <<QIcon(":/Icons/DragDropIcons/Btn6-List/3deck.png")
+        <<QIcon(":/Icons/DragDropIcons/Btn6-List/4deck.png")
+       <<QIcon(":/Icons/DragDropIcons/Btn6-List/5deck.png")
+      <<QIcon(":/Icons/DragDropIcons/Btn6-List/place_a_custom_screen_in_the_flow_trommel_or_banana.png")
+     <<QIcon(":/Icons/DragDropIcons/Btn6-List/place_a_custom_multi_screen_or_split_deck_screen_in_the_flow.png")
+    <<QIcon(":/Icons/DragDropIcons/Btn6-List/air_seperator.png");
 
-
-    //    case 4:
-    //        menuIcons = {QIcon(":/icons/dragIcon/place_a_jaw_crusher_in_the_flow.png"),
-    //                     QIcon(":/icons/dragIcon/place_a_cone_crusher_in_the_flow.png"),
-    //                     QIcon(":/icons/dragIcon/place_an_hsi_crusher_in_the_flow.png"),
-    //                     QIcon(":/icons/dragIcon/place_a_vsi_crusher_in_the_flow.png"),
-    //                     QIcon(":/icons/dragIcon/place_a_roll_crusher_in_the_flow.png"),
-    //                     QIcon(":/icons/dragIcon/place_a_mill_crusher_in_the_flow.png")};
-    //        break;
-    //    case 5:
-    //        menuIcons = {QIcon(":/icons/dragIcon/grizzly_feeder_vibrating_scalper.png"),
-    //                     QIcon(":/icons/dragIcon/1deck.png"),
-    //                     QIcon(":/icons/dragIcon/2deck.png"),
-    //                     QIcon(":/icons/dragIcon/3deck.png"),
-    //                     QIcon(":/icons/dragIcon/4deck.png"),
-    //                     QIcon(":/icons/dragIcon/5deck.png"),
-    //                     QIcon(":/icons/dragIcon/place_a_custom_screen_in_the_flow_trommel_or_banana.png"),
-    //                     QIcon(":/icons/dragIcon/place_a_custom_multi_screen_or_split_deck_screen_in_the_flow.png"),
-    //                     QIcon(":/icons/dragIcon/air_seperator.png")};
-    //        break;
-    //    case 6:
-    //        menuIcons = {QIcon(":/icons/dragIcon/place_a_mobile_jaw_on_the_worksheet.png"),
-    //                     QIcon(":/icons/dragIcon/place_a_mobile_cone_on_the_worksheet.png"),
-    //                     QIcon(":/icons/dragIcon/place_a_mobile_hsi_on_the_worksheet.png"),
-    //                     QIcon(":/icons/dragIcon/place_a_mobile_vsi_on_the_worksheet.png"),
-    //                     QIcon(":/icons/dragIcon/place_a_mobile_screen_on_the_worksheet.png"),
-    //                     QIcon(":/icons/dragIcon/place_a_mobile_wash_unit_on_the_worksheet.png"),
-    //                     QIcon(":/icons/dragIcon/place_a_mobile_conveyor_on_the_worksheet.png")};
-    //        break;
-    //    case 7:
-    //        menuIcons = {QIcon(":/icons/dragIcon/scrubbing_and_attrition_equipment.png"),
-    //                     QIcon(":/icons/dragIcon/classification_equipment.png"),
-    //                     QIcon(":/icons/dragIcon/sand_washing_dewatering.png"),
-    //                     QIcon(":/icons/dragIcon/place_an_overflow_box_in_the_flow.png"),
-    //                     QIcon(":/icons/dragIcon/mixing_box.png"),
-    //                     QIcon(":/icons/dragIcon/place_a_slurry_box_in_the_flow.png"),
-    //                     QIcon(":/icons/dragIcon/slurry_pump.png"),
-    //                     QIcon(":/icons/dragIcon/slurry_valve.png"),
-    //                     QIcon(":/icons/dragIcon/water_treatment_or_recycling_recover_water.png")};
-    //        break;
-    //    case 8:
-    //        menuIcons = {QIcon(":/icons/dragIcon/inventory_suger_pile_with_feeders.png"),
-    //                     QIcon(":/icons/dragIcon/inventory_suger_bin_with_feeders.png")};
-    //        break;
-    //    case 9:
-    //        menuIcons = {QIcon(":/icons/dragIcon/end_point_product_pile.png"),
-    //                     QIcon(":/icons/dragIcon/end_point_haul_truck.png"),
-    //                     QIcon(":/icons/dragIcon/end_point_haul_railway_transport.png"),
-    //                     QIcon(":/icons/dragIcon/end_point_haul_water_transport.png"),
-    //                     QIcon(":/icons/dragIcon/end_point_product_bin.png"),
-    //                     QIcon(":/icons/dragIcon/end_point_blending_station.png")};
-    //        break;
-    //    case 10:
-    //        menuIcons = {QIcon(":/icons/dragIcon/clean_water_source.png"),
-    //                     QIcon(":/icons/dragIcon/clean_Watersource.png"),
-    //                     QIcon(":/icons/dragIcon/water_pump.png"),
-    //                     QIcon(":/icons/dragIcon/water_splitter.png"),
-    //                     QIcon(":/icons/dragIcon/waterSplitter.png"),
-    //                     QIcon(":/icons/dragIcon/water_tank.png"),
-    //                     QIcon(":/icons/dragIcon/water_valve.png"),
-    //                     QIcon(":/icons/dragIcon/water_spray_nozzles.png")};
-    //        break;
-    //    case 11:
-    //        menuIcons = {QIcon(":/icons/dragIcon/sample_bucket.png")};
-    //        break;
-    //    case 12:
-    //        menuIcons = {QIcon(":/icons/dragIcon/external_power_source.png"),
-    //                     QIcon(":/icons/dragIcon/internal_power_source.png"),
-    //                     QIcon(":/icons/dragIcon/fuel_tank.png"),
-    //                     QIcon(":/icons/dragIcon/personnel.png")};
-    //        break;
-    //    case 13:
-    //        menuIcons = {QIcon(":/icons/dragIcon/reset_to_pointer_default_mouse_function.png"),
-    //                     QIcon(":/icons/dragIcon/paint_brush.png"),
-    //                     QIcon(":/icons/dragIcon/select_color_for_paint_brush.png"),
-    //                     QIcon(":/icons/dragIcon/erase_color.png"),
-    //                     QIcon(":/icons/dragIcon/multi_line_notes.png"),
-    //                     QIcon(":/icons/dragIcon/adjustable_text.png"),
-    //                     QIcon(":/icons/dragIcon/arrow.png"),
-    //                     QIcon(":/icons/dragIcon/line.png"),
-    //                     QIcon(":/icons/dragIcon/polyline.png"),
-    //                     QIcon(":/icons/dragIcon/ellipse.png"),
-    //                     QIcon(":/icons/dragIcon/rectangle.png"),
-    //                     QIcon(":/icons/dragIcon/symbols_open_to_select_model.png")};
-
+    QStringList labels7 = {"Item 1", "Item 2", "Item 3","Item 4", "Item 5", "Item 6", "Item 7"};
+    QList<QIcon> icons7;
+    icons7  <<QIcon(":/Icons/DragDropIcons/Btn7-List/place_a_mobile_jaw_on_the_worksheet.png")
+           <<QIcon(":/Icons/DragDropIcons/Btn7-List/place_a_mobile_cone_on_the_worksheet.png")
+          <<QIcon(":/Icons/DragDropIcons/Btn7-List/place_a_mobile_hsi_on_the_worksheet.png")
+         <<QIcon(":/Icons/DragDropIcons/Btn7-List/place_a_mobile_vsi_on_the_worksheet.png")
+        <<QIcon(":/Icons/DragDropIcons/Btn7-List/place_a_mobile_screen_on_the_worksheet.png")
+       <<QIcon(":/Icons/DragDropIcons/Btn7-List/place_a_mobile_wash_unit_on_the_worksheet.png")
+      <<QIcon(":/Icons/DragDropIcons/Btn7-List/place_a_mobile_conveyor_on_the_worksheet.png");
 
     model->clear();
     switch (n)
@@ -224,10 +171,11 @@ void MainWindow::updateListView(int index)
         ui->listView->setModel(model);
         break;
     case 6:
-        ui->groupBoxPaint->show();
+        model->setData(labels6, icons6);
+        ui->listView->setModel(model);
         break;
     case 7:
-        model->setData(labels, icons);
+        model->setData(labels7, icons7);
         ui->listView->setModel(model);
         break;
     case 8:
@@ -235,9 +183,9 @@ void MainWindow::updateListView(int index)
         ui->listView->setModel(model);
         break;
     case 9:
-        ui->groupBoxPaint->show();
         break;
     case 14:
+        ui->groupBoxListView->hide();
         ui->groupBoxPaint->show();
         break;
     default:
@@ -246,6 +194,7 @@ void MainWindow::updateListView(int index)
     ui->listView->setItemDelegate(delegate);
     ui->listView->setDragEnabled(true);
     ui->listView->setIconSize(iconSize);
+
 }
 
 void MainWindow::onPushButtonClicked()
@@ -257,7 +206,7 @@ void MainWindow::onPushButtonClicked()
     QString objectName = clickedButton->objectName();
     int buttonNumber = -1;
 
-    for (int i = 1; i <= 14; ++i)
+    for (int i = 1; i < 14; ++i)
     {
         if (objectName == QString("pushButtonList%1").arg(i))
         {
@@ -266,14 +215,21 @@ void MainWindow::onPushButtonClicked()
         }
     }
 
-    if (objectName == "pushButtonPaint") {
-        buttonNumber = 14;
-    }
-
-    if (buttonNumber != -1)
+    if (objectName == "pushButtonPaint")
     {
+        ui->groupBoxListView->hide(); // Hide the list view group box
+        ui->groupBoxPaint->setParent(ui->groupBoxToolMain); // Ensure groupBoxPaint is a child of groupBoxToolMain
+        ui->groupBoxToolMain->layout()->addWidget(ui->groupBoxPaint); // Reinsert groupBoxPaint in the layout
+        ui->groupBoxPaint->show(); // Show the paint group box
+    }
+    else if (buttonNumber != -1)
+    {
+        ui->groupBoxPaint->hide(); // Hide the paint group box
+        ui->groupBoxListView->setParent(ui->groupBoxToolMain); // Ensure groupBoxListView is a child of groupBoxToolMain
+        ui->groupBoxToolMain->layout()->addWidget(ui->groupBoxListView); // Reinsert groupBoxListView in the layout
+        ui->groupBoxListView->show(); // Show the list view group box
         n = buttonNumber;
-        updateListView(n);
+        updateListView(n); // Update the list view based on the button number
     }
 }
 
@@ -318,7 +274,8 @@ void MainWindow::onGraphicsViewMousePressed(QMouseEvent *event)
         qDebug() << "Mouse pressed at (scene coordinates):" << origin;
 
         currentItem = new CustomShapeItem(shapeType);
-        currentItem->setPos(origin);
+        currentItem->setFlag(QGraphicsItem::ItemIsMovable, false);
+        //        currentItem->setPos(origin);
 
         switch (shapeType)
         {
@@ -328,7 +285,7 @@ void MainWindow::onGraphicsViewMousePressed(QMouseEvent *event)
             break;
         case CustomShapeItem::Line:
         case CustomShapeItem::Arrow:
-            currentItem->setShapeLine(QLineF(origin, origin));
+            currentItem->setShapeLine(QLineF(origin,origin));
             break;
         }
 
@@ -341,13 +298,12 @@ void MainWindow::onGraphicsViewMouseMoved(QMouseEvent *event)
     if (drawing && currentItem)
     {
         QPointF currentPos = ui->graphicsView->mapToScene(event->pos());
-        qDebug() << "Updating shape to:" << currentPos;
 
         switch (shapeType)
         {
         case CustomShapeItem::Rectangle:
         case CustomShapeItem::Ellipse:
-            currentItem->setShapeRect(QRectF(origin, currentPos).normalized());
+            currentItem->setShapeRect(QRectF(origin, currentPos)/*.normalized()*/);
             break;
         case CustomShapeItem::Line:
         case CustomShapeItem::Arrow:
@@ -363,11 +319,36 @@ void MainWindow::onGraphicsViewMouseReleased(QMouseEvent *event)
     if (drawing && event->button() == Qt::LeftButton)
     {
         drawing = false;
+        currentItem->setFlag(QGraphicsItem::ItemIsMovable, true);
         currentItem = nullptr;
     }
 }
 
+void MainWindow::on_tabWidget_tabBarClicked(int index)
+{
+    int n = ui->tabWidget->count();
+    if(index+1 == n)
+    {
+        ui->tabWidget->setTabText(index, QString("page #%1").arg(n));
+        QWidget *newTab = new QWidget();
+        ui->tabWidget->addTab(newTab, "add new");
 
+        QVBoxLayout *layout = new QVBoxLayout(newTab);
 
+        CustomGraphicsView *newGraphicsView = new CustomGraphicsView(newTab);
+
+        QGraphicsView *existingGraphicsView = new QGraphicsView(newTab);
+        newGraphicsView->setScene(existingGraphicsView->scene());
+        newGraphicsView->setRenderHints(existingGraphicsView->renderHints());
+        newGraphicsView->setBackgroundBrush(existingGraphicsView->backgroundBrush());
+
+        layout->addWidget(newGraphicsView);
+
+        QTimer::singleShot(0, [this, newTab]()
+        {
+            ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(newTab));
+        });
+    }
+}
 
 
