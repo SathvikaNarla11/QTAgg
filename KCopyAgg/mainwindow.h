@@ -10,6 +10,7 @@
 #include <QGraphicsPixmapItem>
 #include "customgraphicsview.h"
 #include <QUndoStack>
+#include <QVBoxLayout>
 #include "customshapeitem.h"
 #include "customdelegate.h"
 
@@ -60,6 +61,12 @@ private:
     CustomDelegate *delegateBtn;
 
     QGraphicsScene *scene;
+    QGraphicsScene *scenetab2;
+    QGraphicsScene *sceneTab;
+
+    QVBoxLayout *layout;
+    QGraphicsView *newGraphicsView;
+
     QSize iconSize;
     QUndoStack *undoStack;
     CustomShapeItem *currentItem = nullptr;

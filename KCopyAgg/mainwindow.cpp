@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     ,delegate(new CustomDelegate(38, this))
     ,delegateBtn(new CustomDelegate(34, this))
     ,scene(new QGraphicsScene(this))
+    ,scenetab2(new QGraphicsScene(this))
     ,iconSize(38, 38)
     ,n(0)
 {
@@ -55,6 +56,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
     ui->graphicsView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     ui->graphicsView->setDragMode(QGraphicsView::RubberBandDrag);
+
+    ui->graphicsView_2->setScene(scenetab2);
+    scenetab2->setSceneRect(0, 0, ui->graphicsView_2->width(), ui->graphicsView_2->height());
+    ui->graphicsView_2->setRenderHint(QPainter::Antialiasing);
+    ui->graphicsView_2->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
+    ui->graphicsView_2->setDragMode(QGraphicsView::RubberBandDrag);
     /**********************************************/
 
     connect(ui->graphicsView, &CustomGraphicsView::mousePressed, this, &MainWindow::onGraphicsViewMousePressed);
@@ -329,26 +336,20 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
     int n = ui->tabWidget->count();
     if(index+1 == n)
     {
+        qDebug()<<index<<"-"<<n;
         ui->tabWidget->setTabText(index, QString("page #%1").arg(n));
         QWidget *newTab = new QWidget();
         ui->tabWidget->addTab(newTab, "add new");
 
-        QVBoxLayout *layout = new QVBoxLayout(newTab);
-
-        CustomGraphicsView *newGraphicsView = new CustomGraphicsView(newTab);
-
-        QGraphicsView *existingGraphicsView = new QGraphicsView(newTab);
-        newGraphicsView->setScene(existingGraphicsView->scene());
-        newGraphicsView->setRenderHints(existingGraphicsView->renderHints());
-        newGraphicsView->setBackgroundBrush(existingGraphicsView->backgroundBrush());
-
+        layout = new QVBoxLayout(newTab);
+        newGraphicsView = new CustomGraphicsView(newTab);
+        sceneTab = new QGraphicsScene(newGraphicsView);
+        newGraphicsView->setScene(sceneTab);
+        sceneTab->setSceneRect(0, 0, ui->graphicsView->width(), ui->graphicsView->height());
+        newGraphicsView->setRenderHints(QPainter::Antialiasing);
         layout->addWidget(newGraphicsView);
 
-        QTimer::singleShot(0, [this, newTab]()
-        {
-            ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(newTab));
-        });
+        ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(newTab)-1);
     }
 }
-
 
