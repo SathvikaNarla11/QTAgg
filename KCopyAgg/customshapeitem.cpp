@@ -26,21 +26,42 @@ QPainterPath CustomShapeItem::shape() const
     QPainterPath path;
     switch (shapeType)
     {
-        case Rectangle:
-            path.addRect(shapeRect);
-            break;
-        case Ellipse:
-            path.addEllipse(shapeRect);
-            break;
-        case Line:
-            path.moveTo(shapeLine.p1());
-            path.lineTo(shapeLine.p2());
-            break;
-        case Arrow:
-            path.moveTo(shapeLine.p1());
-            path.lineTo(shapeLine.p2());
-            // Add arrowhead shape logic if necessary
-            break;
+    case Rectangle:
+        path.addRect(shapeRect);
+        break;
+    case Ellipse:
+        path.addEllipse(shapeRect);
+        break;
+    case Line:
+        path.moveTo(shapeLine.p1());
+        path.lineTo(shapeLine.p2());
+        break;
+    case Arrow:
+        path.moveTo(shapeLine.p1());
+        path.lineTo(shapeLine.p2());
+
+        QPointF arrowHeadTip = shapeLine.p2();
+        qreal arrowSize = 10; // Size of the arrowhead
+        QLineF line(shapeLine.p1(), shapeLine.p2());
+        qreal angle = line.angle(); // Angle in degrees
+
+        QTransform transform;
+        transform.rotate(angle);
+
+        QPointF arrowHeadBase1 = transform.map(QPointF(-arrowSize, -arrowSize));
+        QPointF arrowHeadBase2 = transform.map(QPointF(-arrowSize, arrowSize));
+
+        arrowHeadBase1 += arrowHeadTip;
+        arrowHeadBase2 += arrowHeadTip;
+
+        QPainterPath arrowheadPath;
+        arrowheadPath.moveTo(arrowHeadTip);
+        arrowheadPath.lineTo(arrowHeadBase1);
+        arrowheadPath.lineTo(arrowHeadBase2);
+        arrowheadPath.lineTo(arrowHeadTip);
+
+        path.addPath(arrowheadPath);
+        break;
     }
     return path;
 }
@@ -51,19 +72,19 @@ void CustomShapeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 
     switch (shapeType)
     {
-        case Rectangle:
-            painter->drawRect(shapeRect);
-            break;
-        case Ellipse:
-            painter->drawEllipse(shapeRect);
-            break;
-        case Line:
-            painter->drawLine(shapeLine.p1(), shapeLine.p2());
-            break;
-        case Arrow:
-            painter->drawLine(shapeLine.p1(), shapeLine.p2());
-            // Add arrowhead drawing logic here
-            break;
+    case Rectangle:
+        painter->drawRect(shapeRect);
+        break;
+    case Ellipse:
+        painter->drawEllipse(shapeRect);
+        break;
+    case Line:
+        painter->drawLine(shapeLine.p1(), shapeLine.p2());
+        break;
+    case Arrow:
+        painter->drawLine(shapeLine.p1(), shapeLine.p2());
+        // Add arrowhead drawing logic here
+        break;
     }
 
     if (option->state & QStyle::State_Selected)

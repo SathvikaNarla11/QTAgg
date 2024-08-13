@@ -36,10 +36,10 @@ private slots:
 //        void undo();
 //        void redo();
 
-    void on_pushButtonRect_clicked();
-    void on_pushButtonEllipse_clicked();
-    void on_pushButtonLine_clicked();
-    void on_pushButtonArrow_clicked();
+//    void on_pushButtonRect_clicked();
+//    void on_pushButtonEllipse_clicked();
+//    void on_pushButtonLine_clicked();
+//    void on_pushButtonArrow_clicked();
 
     void onGraphicsViewMousePressed(QMouseEvent *event);
     void onGraphicsViewMouseMoved(QMouseEvent *event);
@@ -48,6 +48,7 @@ private slots:
 
 
     void on_tabWidget_tabBarClicked(int index);
+    void onDrawingModeSelected(int mode);
 
 protected:
 
