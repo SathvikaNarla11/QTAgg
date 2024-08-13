@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
 #include <QStyleOptionGraphicsItem>
+#include <QDebug>
 
 CustomShapeItem::CustomShapeItem(ShapeType shapeType, QGraphicsItem *parent)
     : QGraphicsItem(parent), shapeType(shapeType)
@@ -39,28 +40,7 @@ QPainterPath CustomShapeItem::shape() const
     case Arrow:
         path.moveTo(shapeLine.p1());
         path.lineTo(shapeLine.p2());
-
-        QPointF arrowHeadTip = shapeLine.p2();
-        qreal arrowSize = 10; // Size of the arrowhead
-        QLineF line(shapeLine.p1(), shapeLine.p2());
-        qreal angle = line.angle(); // Angle in degrees
-
-        QTransform transform;
-        transform.rotate(angle);
-
-        QPointF arrowHeadBase1 = transform.map(QPointF(-arrowSize, -arrowSize));
-        QPointF arrowHeadBase2 = transform.map(QPointF(-arrowSize, arrowSize));
-
-        arrowHeadBase1 += arrowHeadTip;
-        arrowHeadBase2 += arrowHeadTip;
-
-        QPainterPath arrowheadPath;
-        arrowheadPath.moveTo(arrowHeadTip);
-        arrowheadPath.lineTo(arrowHeadBase1);
-        arrowheadPath.lineTo(arrowHeadBase2);
-        arrowheadPath.lineTo(arrowHeadTip);
-
-        path.addPath(arrowheadPath);
+        //ADD LOGIC FOR ARROW HEAD
         break;
     }
     return path;
@@ -113,6 +93,7 @@ void CustomShapeItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
     {
+        qDebug()<<"SHAPECLICK";
         QGraphicsItem::mousePressEvent(event);
     }
 }
@@ -132,3 +113,4 @@ void CustomShapeItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         QGraphicsItem::mouseReleaseEvent(event);
     }
 }
+

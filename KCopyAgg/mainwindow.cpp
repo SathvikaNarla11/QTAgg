@@ -13,24 +13,22 @@ MainWindow::MainWindow(QWidget *parent)
     :QMainWindow(parent)
     ,ui(new Ui::MainWindow)
     ,model(new IconListModel(this))
-    ,modelBtn(new IconListModel(this))
     ,delegate(new CustomDelegate(38, this))
-    ,delegateBtn(new CustomDelegate(34, this))
     ,scene(new QGraphicsScene(this))
     ,scenetab2(new QGraphicsScene(this))
     ,iconSize(38, 38)
 {
     ui->setupUi(this);
-    ui->groupBoxPaint->hide();
     QStringList labels = {"Item 1", "Item 2", "Item 3","Item 4", "Item 5", "Item 6", "Item 7"};
     QList<QIcon> icons;
-    icons << QIcon(":/Icons/DragDropIcons/Btn1-List/start_points_bull_dozer.png")
-          << QIcon(":/Icons/DragDropIcons/Btn1-List/start_points_dredge.png")
-          << QIcon(":/Icons/DragDropIcons/Btn1-List/start_points_dump_truck.png")
-          << QIcon(":/Icons/DragDropIcons/Btn1-List/start_points_excavator.png")
-          << QIcon(":/Icons/DragDropIcons/Btn1-List/start_points_generic_material_source.png")
-          << QIcon(":/Icons/DragDropIcons/Btn1-List/start_points_loader.png")
-          << QIcon(":/Icons/DragDropIcons/Btn1-List/start_points_start_suger_pile.png");
+    icons
+            << QIcon(":/Icons/DragDropIcons/Btn1-List/start_points_loader.png")
+            << QIcon(":/Icons/DragDropIcons/Btn1-List/start_points_dump_truck.png")
+            << QIcon(":/Icons/DragDropIcons/Btn1-List/start_points_excavator.png")
+            << QIcon(":/Icons/DragDropIcons/Btn1-List/start_points_bull_dozer.png")
+            << QIcon(":/Icons/DragDropIcons/Btn1-List/start_points_dredge.png")
+            << QIcon(":/Icons/DragDropIcons/Btn1-List/start_points_generic_material_source.png")
+            << QIcon(":/Icons/DragDropIcons/Btn1-List/start_points_start_suger_pile.png");
 
 
     model->setData(labels, icons);
@@ -38,18 +36,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->listView->setItemDelegate(delegate);
     ui->listView->setDragEnabled(true);
     ui->listView->setIconSize(iconSize);
-
-    QSize iconSizeBtn(30, 30);
-    ui->listViewBtn->setParent(ui->groupBoxPaint);
-    QStringList labels14 = {"Item 1"};
-    QList<QIcon> icons14;
-    icons14 << QIcon(":/Icons/DragDropIcons/Btn14-List/symbols_open_to_select_model.png");
-    modelBtn->setData(labels14, icons14);
-    ui->listViewBtn->setModel(modelBtn);
-    ui->listViewBtn->setItemDelegate(delegateBtn);
-    ui->listViewBtn->setDragEnabled(true);
-    ui->listViewBtn->setIconSize(iconSizeBtn);
-
 
     ui->graphicsView->setScene(scene);
     scene->setSceneRect(0, 0, ui->graphicsView->width(), ui->graphicsView->height());
@@ -82,8 +68,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButtonList12, &QPushButton::clicked, this, &MainWindow::onPushButtonClicked);
     connect(ui->pushButtonList13, &QPushButton::clicked, this, &MainWindow::onPushButtonClicked);
     connect(ui->pushButtonList14, &QPushButton::clicked, this, &MainWindow::onPushButtonClicked);
-    connect(ui->pushButtonPaint, &QPushButton::clicked, this, &MainWindow::onPushButtonClicked);
-
 }
 
 MainWindow::~MainWindow()
@@ -93,7 +77,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::updateListView(int index)
 {
-    ui->groupBoxPaint->hide();
     QStringList labels;
     IconListModel *menuModel = new IconListModel(this);
     QList<QIcon> menuIcons;
@@ -315,7 +298,6 @@ void MainWindow::onPushButtonClicked()
     }
     if (buttonNumber != -1)
     {
-        ui->groupBoxPaint->hide();
         ui->groupBoxListView->setParent(ui->groupBoxToolMain);
         ui->groupBoxToolMain->layout()->addWidget(ui->groupBoxListView);
         ui->groupBoxListView->show();
@@ -376,6 +358,7 @@ void MainWindow::onGraphicsViewMouseReleased(QMouseEvent *event)
 {
     if (drawing && event->button() == Qt::LeftButton)
     {
+        qDebug()<<"3";
         drawing = false;
         currentItem->setFlag(QGraphicsItem::ItemIsMovable, true);
         currentItem = nullptr;

@@ -4,6 +4,7 @@
 #include <QMimeData>
 #include <QGraphicsPixmapItem>
 #include <QIcon>
+#include "customshapeitem.h"
 
 CustomGraphicsView::CustomGraphicsView(QWidget *parent)
     : QGraphicsView(parent)
@@ -14,6 +15,33 @@ void CustomGraphicsView::mousePressEvent(QMouseEvent *event)
 {
     emit mousePressed(event);
     QGraphicsView::mousePressEvent(event);
+
+    QPointF scenePos = mapToScene(event->pos());
+    QGraphicsItem* item = itemAt(event->pos());
+
+    if (item)
+    {
+        QGraphicsPixmapItem* pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(item);
+        addPointsToItem(pixmapItem, 38, 38);
+    }
+}
+
+void CustomGraphicsView::addPointsToItem(QGraphicsPixmapItem* item, int width, int height)
+{
+    QGraphicsEllipseItem* startPoint = new QGraphicsEllipseItem(-5, -5, 8, 8, item);
+    startPoint->setBrush(Qt::red);
+    startPoint->setPos(-4, height/2 - 2); // Red point at top-left
+    startPoint->setZValue(1);
+    startPoint->setData(0, "redPoint");
+
+    QGraphicsEllipseItem* endPoint = new QGraphicsEllipseItem(-5, -5, 10, 10, item);
+    endPoint->setBrush(Qt::blue);
+    endPoint->setPos(width+2, height/2 -2); // Blue point at bottom-right
+    endPoint->setZValue(1);
+    endPoint->setData(0,"bluePoint");
+
+    qDebug() << "Red point added at:" << startPoint->pos();
+    qDebug() << "Blue point added at:" << endPoint->pos();
 }
 
 void CustomGraphicsView::mouseMoveEvent(QMouseEvent *event)
@@ -64,16 +92,13 @@ void CustomGraphicsView::dropEvent(QDropEvent *event)
             {
                 QPixmap pixmap = icon.pixmap(QSize(38, 38)); // use correct icon size
                 QGraphicsPixmapItem *item = new QGraphicsPixmapItem(pixmap);
+
                 item->setFlag(QGraphicsItem::ItemIsMovable);
                 item->setFlag(QGraphicsItem::ItemIsSelectable);
+
                 QPointF scenePos = mapToScene(event->pos());
                 QPointF offset(pixmap.width() / 2, pixmap.height() / 2);
                 QPointF finalPos = scenePos - offset;
-
-                qDebug() << "Drop position (view coordinates):" << event->pos();
-                qDebug() << "Drop position (scene coordinates):" << scenePos;
-                qDebug() << "Drop position (scene coordinates):" << offset;
-                qDebug() << "Adjusted position:" << finalPos;
 
                 item->setPos(finalPos);
                 scene()->addItem(item);
@@ -82,3 +107,7 @@ void CustomGraphicsView::dropEvent(QDropEvent *event)
         event->acceptProposedAction();
     }
 }
+
+
+
+

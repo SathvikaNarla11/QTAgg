@@ -3,7 +3,7 @@
 
 #include <QGraphicsView>
 #include <QMouseEvent>
-
+#include "customshapeitem.h"
 class CustomGraphicsView : public QGraphicsView
 {
     Q_OBJECT
@@ -26,6 +26,10 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
+
+private:
+    void addPointsToItem(QGraphicsPixmapItem* item, int width, int height);
+
 };
 
 #endif // CUSTOMGRAPHICSVIEW_H
