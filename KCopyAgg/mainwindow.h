@@ -43,6 +43,14 @@ private slots:
     void on_tabWidget_tabBarClicked(int index);
     void onDrawingModeSelected(int mode);
 
+    void on_actionTop_triggered();
+
+    void on_actionBottom_triggered();
+
+    void on_actionLeft_triggered();
+
+    void on_actionRight_triggered();
+
 protected:
 
 private:
@@ -66,5 +74,7 @@ private:
     QPointF origin;
 
     void updateListView(int n);
+
+    CustomGraphicsView *customGraphicsView;
 };
 #endif // MAINWINDOW_H

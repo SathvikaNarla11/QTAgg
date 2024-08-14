@@ -11,6 +11,7 @@ CustomGraphicsView::CustomGraphicsView(QWidget *parent)
 {
     setAcceptDrops(true);
 }
+
 void CustomGraphicsView::mousePressEvent(QMouseEvent *event)
 {
     emit mousePressed(event);
@@ -77,6 +78,10 @@ void CustomGraphicsView::dragMoveEvent(QDragMoveEvent *event)
 void CustomGraphicsView::dropEvent(QDropEvent *event)
 {
     qDebug() << "Drop";
+    if (!scene()) {
+        qWarning() << "Scene is null at dropEvent!";
+        return;
+    }
     if (event->mimeData()->hasFormat("application/x-qabstractitemmodeldatalist"))
     {
         QByteArray encodedData = event->mimeData()->data("application/x-qabstractitemmodeldatalist");

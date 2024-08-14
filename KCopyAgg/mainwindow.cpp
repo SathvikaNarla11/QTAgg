@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     ,iconSize(38, 38)
 {
     ui->setupUi(this);
+
     QStringList labels = {"Item 1", "Item 2", "Item 3","Item 4", "Item 5", "Item 6", "Item 7"};
     QList<QIcon> icons;
     icons
@@ -387,3 +388,64 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
         ui->tabWidget->setCurrentIndex(ui->tabWidget->indexOf(newTab)-1);
     }
 }
+
+void MainWindow::on_actionTop_triggered()
+{
+    qDebug()<<"top";
+    QList<QGraphicsItem*> allItems = scene->items();
+    for (QGraphicsItem* item : qAsConst(allItems))
+    {
+        QGraphicsPixmapItem* pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(item);
+        if (pixmapItem && pixmapItem->isSelected())
+        {
+            qDebug() << "Found a QGraphicsPixmapItem at position:" << pixmapItem->pos();
+            pixmapItem->setPos(pixmapItem->x(), 0);
+        }
+    }
+}
+
+void MainWindow::on_actionBottom_triggered()
+{
+    qDebug()<<"top";
+    QList<QGraphicsItem*> allItems = scene->items();
+    for (QGraphicsItem* item : qAsConst(allItems))
+    {
+        QGraphicsPixmapItem* pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(item);
+        if (pixmapItem && pixmapItem->isSelected())
+        {
+            qDebug() << "Found a QGraphicsPixmapItem at position:" << pixmapItem->pos();
+            pixmapItem->setPos(pixmapItem->x(), scene->height() - pixmapItem->boundingRect().height());
+        }
+    }
+}
+
+void MainWindow::on_actionLeft_triggered()
+{
+    qDebug()<<"top";
+    QList<QGraphicsItem*> allItems = scene->items();
+    for (QGraphicsItem* item : qAsConst(allItems))
+    {
+        QGraphicsPixmapItem* pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(item);
+        if (pixmapItem && pixmapItem->isSelected())
+        {
+            qDebug() << "Found a QGraphicsPixmapItem at position:" << pixmapItem->pos();
+             pixmapItem->setPos(0, pixmapItem->y());
+        }
+    }
+}
+
+void MainWindow::on_actionRight_triggered()
+{
+    qDebug()<<"top";
+    QList<QGraphicsItem*> allItems = scene->items();
+    for (QGraphicsItem* item : qAsConst(allItems))
+    {
+        QGraphicsPixmapItem* pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(item);
+        if (pixmapItem && pixmapItem->isSelected())
+        {
+            qDebug() << "Found a QGraphicsPixmapItem at position:" << pixmapItem->pos();
+            pixmapItem->setPos(scene->width() - pixmapItem->boundingRect().width(), pixmapItem->y());
+        }
+    }
+}
+

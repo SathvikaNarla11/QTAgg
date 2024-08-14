@@ -10,7 +10,6 @@ class CustomGraphicsView : public QGraphicsView
 
 public:
     explicit CustomGraphicsView(QWidget *parent = nullptr);
-    //CustomGraphicsView(QWidget *parent = nullptr);
 
 signals:
     void mousePressed(QMouseEvent *event);
