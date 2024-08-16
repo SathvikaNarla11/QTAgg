@@ -36,12 +36,14 @@ private slots:
 
     void onGraphicsViewMousePressed(QMouseEvent *event);
     void onGraphicsViewMouseMoved(QMouseEvent *event);
-    void onGraphicsViewMouseReleased(QMouseEvent *event);
+    void onGraphicsViewMouseReleased(QMouseEvent *event/*, QPainter *painter*/);
     void onPushButtonClicked();
 
 
     void on_tabWidget_tabBarClicked(int index);
-    void onDrawingModeSelected(int mode);
+    void onDrawingModeSelected(const QModelIndex &index);
+    void onClickingTransportEquipment(const QModelIndex &index);
+
 
     void on_actionTop_triggered();
 
@@ -73,7 +75,7 @@ private:
     CustomShapeItem::ShapeType shapeType;
     QPointF origin;
 
-    void updateListView(int n);
+    void updateListView(int index);
 
     CustomGraphicsView *customGraphicsView;
 };

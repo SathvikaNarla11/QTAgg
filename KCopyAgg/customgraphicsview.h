@@ -28,6 +28,8 @@ protected:
 
 private:
     void addPointsToItem(QGraphicsPixmapItem* item, int width, int height);
+    void removePointsFromItem(QGraphicsItem* item);
+    QGraphicsItem *previousItem = nullptr;
 
 };
 

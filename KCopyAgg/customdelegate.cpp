@@ -4,6 +4,7 @@
 #include <QMimeData>
 #include <QDrag>
 #include <QAbstractItemView>
+#include <QDebug>
 
 IconListModel::IconListModel(QObject* parent) : QStandardItemModel(parent)
 {
@@ -18,7 +19,6 @@ void IconListModel::setData(const QStringList& labels, const QList<QIcon>& icons
         QStandardItem* item = new QStandardItem(icons.at(i), QString());
         item->setData(icons.at(i), Qt::UserRole + 1); // Store the icon for drag and drop
         item->setData(labels.at(i), Qt::ToolTipRole);
-
         appendRow(item);
     }
 }
@@ -39,3 +39,5 @@ void CustomDelegate::setRowHeight(int rowHeight)
     m_rowHeight = rowHeight;
     emit sizeHintChanged();
 }
+
+

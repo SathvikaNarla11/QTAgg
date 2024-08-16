@@ -5,6 +5,8 @@
 #include <QGraphicsPixmapItem>
 #include <QIcon>
 #include "customshapeitem.h"
+#include <QGraphicsRectItem>
+#include "ui_mainwindow.h"
 
 CustomGraphicsView::CustomGraphicsView(QWidget *parent)
     : QGraphicsView(parent)
@@ -16,34 +18,20 @@ void CustomGraphicsView::mousePressEvent(QMouseEvent *event)
 {
     emit mousePressed(event);
     QGraphicsView::mousePressEvent(event);
-
-    QPointF scenePos = mapToScene(event->pos());
     QGraphicsItem* item = itemAt(event->pos());
-
     if (item)
     {
+        if (previousItem)
+        {
+            removePointsFromItem(previousItem);
+        }
         QGraphicsPixmapItem* pixmapItem = dynamic_cast<QGraphicsPixmapItem*>(item);
         addPointsToItem(pixmapItem, 38, 38);
+        previousItem = item;
     }
 }
 
-void CustomGraphicsView::addPointsToItem(QGraphicsPixmapItem* item, int width, int height)
-{
-    QGraphicsEllipseItem* startPoint = new QGraphicsEllipseItem(-5, -5, 8, 8, item);
-    startPoint->setBrush(Qt::red);
-    startPoint->setPos(-4, height/2 - 2); // Red point at top-left
-    startPoint->setZValue(1);
-    startPoint->setData(0, "redPoint");
 
-    QGraphicsEllipseItem* endPoint = new QGraphicsEllipseItem(-5, -5, 10, 10, item);
-    endPoint->setBrush(Qt::blue);
-    endPoint->setPos(width+2, height/2 -2); // Blue point at bottom-right
-    endPoint->setZValue(1);
-    endPoint->setData(0,"bluePoint");
-
-    qDebug() << "Red point added at:" << startPoint->pos();
-    qDebug() << "Blue point added at:" << endPoint->pos();
-}
 
 void CustomGraphicsView::mouseMoveEvent(QMouseEvent *event)
 {
@@ -68,17 +56,19 @@ void CustomGraphicsView::dragEnterEvent(QDragEnterEvent *event)
 
 void CustomGraphicsView::dragMoveEvent(QDragMoveEvent *event)
 {
-    qDebug() << "Drag move";
+//    qDebug() << "Drag move";
     if (event->mimeData()->hasFormat("application/x-qabstractitemmodeldatalist"))
     {
         event->acceptProposedAction();
     }
 }
 
+
 void CustomGraphicsView::dropEvent(QDropEvent *event)
 {
     qDebug() << "Drop";
-    if (!scene()) {
+    if (!scene())
+    {
         qWarning() << "Scene is null at dropEvent!";
         return;
     }
@@ -113,6 +103,36 @@ void CustomGraphicsView::dropEvent(QDropEvent *event)
     }
 }
 
+void CustomGraphicsView::removePointsFromItem(QGraphicsItem* item)
+{
+    if (!item)
+        return;
+    for (QGraphicsItem* child : item->childItems())
+    {
+        QGraphicsEllipseItem* pointItem = dynamic_cast<QGraphicsEllipseItem*>(child);
+        if (pointItem)
+        {
+            pointItem->setVisible(false);
+        }
+    }
+}
 
+void CustomGraphicsView::addPointsToItem(QGraphicsPixmapItem* item, int width, int height)
+{
+    QGraphicsEllipseItem* startPoint = new QGraphicsEllipseItem(-5, -5, 8, 8, item);
+    startPoint->setBrush(Qt::red);
+    startPoint->setPos(-4, height/2 - 2); // Red point at top-left
+    startPoint->setZValue(1);
+    startPoint->setData(0, "redPoint");
+
+    QGraphicsEllipseItem* endPoint = new QGraphicsEllipseItem(-5, -5, 10, 10, item);
+    endPoint->setBrush(Qt::blue);
+    endPoint->setPos(width+2, height/2 -2); // Blue point at bottom-right
+    endPoint->setZValue(1);
+    endPoint->setData(0,"bluePoint");
+
+    qDebug() << "Red point added at:" << startPoint->pos();
+    qDebug() << "Blue point added at:" << endPoint->pos();
+}
 
 

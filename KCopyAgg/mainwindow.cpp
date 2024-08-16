@@ -7,6 +7,8 @@
 #include <QIcon>
 #include <QTimer>
 #include <QColorDialog>
+#include <QPainter>
+#include <QModelIndex>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -76,13 +78,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+//void MainWindow::updateListView(int index)
 void MainWindow::updateListView(int index)
 {
     QStringList labels;
     IconListModel *menuModel = new IconListModel(this);
     QList<QIcon> menuIcons;
 
-    switch (index) {
+    /* switch (index)*/
+    switch(index)
+    {
     case 1:
         menuIcons = {QIcon(":/Icons/DragDropIcons/Btn1-List/start_points_loader.png"),
                      QIcon(":/Icons/DragDropIcons/Btn1-List/start_points_dump_truck.png"),
@@ -110,6 +115,9 @@ void MainWindow::updateListView(int index)
                      QIcon(":/Icons/DragDropIcons/Btn3-List/place_a_surge_bin_in_the_flow.png"),
                      QIcon(":/Icons/DragDropIcons/Btn3-List/bucket_elevator.png"),
                      QIcon(":/Icons/DragDropIcons/Btn3-List/screw_conveyor.png")};
+        connect(ui->listView, &QListView::clicked, [this](const QModelIndex &index) {
+            onClickingTransportEquipment(index);
+        });
         break;
     case 4:
         menuIcons = {QIcon(":/Icons/DragDropIcons/Btn4-List/place_a_splitter_in_the_flow.png"),
@@ -202,8 +210,9 @@ void MainWindow::updateListView(int index)
                      QIcon(":/Icons/DragDropIcons/Btn14-List/rectangle.png"),
                      QIcon(":/Icons/DragDropIcons/Btn14-List/symbols_open_to_select_model.png")};
 
-        connect(ui->listView, &QListView::clicked, [this](const QModelIndex &index) {
-            onDrawingModeSelected(index.row());
+        connect(ui->listView, &QListView::clicked, [this](const QModelIndex &index)
+        {
+            onDrawingModeSelected(index);
         });
 
         break;
@@ -225,10 +234,10 @@ void MainWindow::updateListView(int index)
     ui->listView->setIconSize(iconSize);
 }
 
-void MainWindow::onDrawingModeSelected(int mode)
+void MainWindow::onDrawingModeSelected(const QModelIndex &index)
 {
-    ui->listView->setDragEnabled(false);
-    switch (mode)
+    //    ui->listView->setDragEnabled(false);
+    switch (index.row())
     {
     case 0:
         qDebug() << "default mouse function";
@@ -279,6 +288,27 @@ void MainWindow::onDrawingModeSelected(int mode)
 }
 
 
+void MainWindow::onClickingTransportEquipment(const QModelIndex &index)
+{
+    switch (index.row())
+    {
+    case 0:
+        qDebug() << "coveyor in flow";
+        shapeType = CustomShapeItem::FixedLine;
+        drawing = true;
+        break;
+    case 1:
+        qDebug() << "reversible conveyor in flow";
+        shapeType = CustomShapeItem::FixedLine;
+        drawing = true;
+        break;
+    default:
+        ui->listView->setDragEnabled(true);
+        break;
+
+    }
+}
+
 void MainWindow::onPushButtonClicked()
 {
     QPushButton *clickedButton = qobject_cast<QPushButton *>(sender());
@@ -305,6 +335,7 @@ void MainWindow::onPushButtonClicked()
         n = buttonNumber;
         qDebug()<<buttonNumber<<" -n "<<n;
         updateListView(n);
+        //        updateListView(&index);
     }
 }
 
@@ -330,6 +361,18 @@ void MainWindow::onGraphicsViewMousePressed(QMouseEvent *event)
             break;
         }
         scene->addItem(currentItem);
+
+        if (shapeType == CustomShapeItem::FixedLine)
+        {
+            // Fixed dimension line logic
+            QPointF startPos = ui->graphicsView->mapToScene(event->pos());
+            QPointF endPos = startPos + QPointF(30.0, 0); // Example fixed size line
+            CustomShapeItem* shapeItem = new CustomShapeItem(CustomShapeItem::Line);
+            shapeItem->setShapeLine(QLineF(startPos, endPos));
+            scene->addItem(shapeItem);
+            currentItem = shapeItem;
+        }
+
     }
 }
 
@@ -355,16 +398,33 @@ void MainWindow::onGraphicsViewMouseMoved(QMouseEvent *event)
     }
 }
 
-void MainWindow::onGraphicsViewMouseReleased(QMouseEvent *event)
+void MainWindow::onGraphicsViewMouseReleased(QMouseEvent *event/*, QPainter *painter*/)
 {
     if (drawing && event->button() == Qt::LeftButton)
     {
-        qDebug()<<"3";
+        qDebug() << "Mouse released at (view coordinates):" << event->pos();
+        qDebug() << "Mouse released at (scene coordinates):" << ui->graphicsView->mapToScene(event->pos());
+
         drawing = false;
+
+        if (shapeType == CustomShapeItem::Rectangle || shapeType == CustomShapeItem::Ellipse)
+        {
+            CustomShapeItem* shapeItem = dynamic_cast<CustomShapeItem*>(currentItem);
+            if (shapeItem)
+            {
+                QRectF rect = shapeItem->getShapeRect();
+                if (rect.width() < 20 || rect.height() < 20)
+                {
+                    rect.setSize(QSizeF(20, 20));
+                    shapeItem->setShapeRect(rect);
+                }
+            }
+        }
         currentItem->setFlag(QGraphicsItem::ItemIsMovable, true);
         currentItem = nullptr;
     }
 }
+
 
 void MainWindow::on_tabWidget_tabBarClicked(int index)
 {
@@ -429,7 +489,7 @@ void MainWindow::on_actionLeft_triggered()
         if (pixmapItem && pixmapItem->isSelected())
         {
             qDebug() << "Found a QGraphicsPixmapItem at position:" << pixmapItem->pos();
-             pixmapItem->setPos(0, pixmapItem->y());
+            pixmapItem->setPos(0, pixmapItem->y());
         }
     }
 }
