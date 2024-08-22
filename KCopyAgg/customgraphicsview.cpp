@@ -131,8 +131,8 @@ void CustomGraphicsView::addPointsToItem(QGraphicsPixmapItem* item, int width, i
     endPoint->setZValue(1);
     endPoint->setData(0,"bluePoint");
 
-    qDebug() << "Red point added at:" << startPoint->pos();
-    qDebug() << "Blue point added at:" << endPoint->pos();
+//    qDebug() << "Red point added at:" << startPoint->pos();
+//    qDebug() << "Blue point added at:" << endPoint->pos();
 }
 
 

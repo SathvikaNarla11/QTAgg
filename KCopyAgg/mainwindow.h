@@ -28,10 +28,22 @@ public:
     ~MainWindow();
 
     void addItem(const QString &itemText);
+    void addBlueHandles(CustomShapeItem *shapeItem);
+    QList<QGraphicsEllipseItem*> handles;
+    void updateHandlesPosition(CustomShapeItem* shapeItem);
+
+    CustomShapeItem* resizableShapeItem = nullptr;
+    QGraphicsEllipseItem* handle = nullptr;
+    QGraphicsItem* itemUnderMouse = nullptr;
+    QGraphicsItem* clickedItem = nullptr;
+    void removeHandles();
+    QGraphicsEllipseItem* addHandleAt(const QPointF& position, const QColor& color);
+    void updateBlueHandles(CustomShapeItem* shapeItem);
 
 private slots:
-//        void undo();
-//        void redo();
+    //        void undo();
+    //        void redo();
+
 
 
     void onGraphicsViewMousePressed(QMouseEvent *event);

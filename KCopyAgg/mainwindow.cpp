@@ -335,20 +335,31 @@ void MainWindow::onPushButtonClicked()
         n = buttonNumber;
         qDebug()<<buttonNumber<<" -n "<<n;
         updateListView(n);
-        //        updateListView(&index);
     }
 }
 
 void MainWindow::onGraphicsViewMousePressed(QMouseEvent *event)
 {
+    origin = ui->graphicsView->mapToScene(event->pos());
+
+    clickedItem = scene->itemAt(origin, QTransform());
+
+    if (clickedItem && dynamic_cast<QGraphicsEllipseItem*>(clickedItem))
+    {
+        handle = dynamic_cast<QGraphicsEllipseItem*>(clickedItem);
+        handle->setPen(QPen(Qt::green));
+        handle->setBrush(QBrush(Qt::green));
+        scene->update();
+    }
+
     if (drawing && event->button() == Qt::LeftButton)
     {
-        origin = ui->graphicsView->mapToScene(event->pos());
         qDebug() << "Mouse pressed at (view coordinates):" << event->pos();
         qDebug() << "Mouse pressed at (scene coordinates):" << origin;
 
         currentItem = new CustomShapeItem(shapeType);
         currentItem->setFlag(QGraphicsItem::ItemIsMovable, false);
+
         switch (shapeType)
         {
         case CustomShapeItem::Rectangle:
@@ -374,14 +385,30 @@ void MainWindow::onGraphicsViewMousePressed(QMouseEvent *event)
         }
 
     }
+    //    else
+    //    {
+    ////        QPointF clickedPos = ui->graphicsView->mapToScene(event->pos());
+    ////        clickedItem = scene->itemAt(clickedPos, QTransform());
+
+    ////        if (clickedItem && dynamic_cast<QGraphicsEllipseItem*>(clickedItem))
+    ////        {
+    ////            handle = dynamic_cast<QGraphicsEllipseItem*>(clickedItem);
+    ////            handle->setPen(QPen(Qt::green));
+    ////            handle->setBrush(QBrush(Qt::green));
+    ////            scene->update();
+    ////        }
+    //    }
 }
+
+
+CustomShapeItem* resizableShapeItem = nullptr; // Add this as a member variable in MainWindow
 
 void MainWindow::onGraphicsViewMouseMoved(QMouseEvent *event)
 {
+    QPointF currentPos = ui->graphicsView->mapToScene(event->pos());
+
     if (drawing && currentItem)
     {
-        QPointF currentPos = ui->graphicsView->mapToScene(event->pos());
-
         switch (shapeType)
         {
         case CustomShapeItem::Rectangle:
@@ -394,9 +421,139 @@ void MainWindow::onGraphicsViewMouseMoved(QMouseEvent *event)
             break;
         }
         scene->update();
-        scenetab2->update();
+    }
+    else
+    {
+        if (clickedItem && handles.contains(dynamic_cast<QGraphicsEllipseItem*>(clickedItem)))
+        {
+            handle = dynamic_cast<QGraphicsEllipseItem*>(clickedItem);
+            if (handle)
+            {
+                handle->setPen(QPen(Qt::green));
+                handle->setBrush(QBrush(Qt::green));
+
+                resizableShapeItem = dynamic_cast<CustomShapeItem*>(handle->parentItem());
+                resizableShapeItem->setFlag(QGraphicsItem::ItemIsMovable, false);
+                if (!resizableShapeItem)
+                {
+                    qDebug() << "Error: Parent Item is nullptr.";
+                    return;
+                }
+
+                QRectF originalRect = resizableShapeItem->boundingRect();
+                QRectF newRect = originalRect;
+
+                if (handle == handles[0])
+                {
+                    qDebug() << "Moving along lefttop";
+                    newRect.setTopLeft(currentPos);
+                    newRect.setBottomRight(QPointF(originalRect.bottomRight().x(), originalRect.bottomRight().y()));
+                }
+                else if (handle == handles[1])
+                {
+                    qDebug() << "Moving along righttop";
+                    newRect.setTopRight(currentPos);
+                    newRect.setBottomLeft(QPointF(originalRect.bottomLeft().x(), originalRect.bottomLeft().y()));
+                }
+                else if (handle == handles[2])
+                {
+                    qDebug() << "Moving along leftbottom";
+                    newRect.setBottomLeft(currentPos);
+                    newRect.setTopRight(QPointF(originalRect.topRight().x(), originalRect.topRight().y()));
+                }
+                else if (handle == handles[3])
+                {
+                    qDebug() << "Moving along rightbottom";
+                    newRect.setBottomRight(currentPos);
+                }
+
+                resizableShapeItem->setShapeRect(newRect);
+//                updateBlueHandles(resizableShapeItem);
+                scene->update();
+            }
+        }
     }
 }
+
+//void MainWindow::onGraphicsViewMouseMoved(QMouseEvent *event)
+//{
+//    QPointF currentPos = ui->graphicsView->mapToScene(event->pos());
+
+//    if (drawing && currentItem)
+//    {
+//        // Drawing a new shape
+//        switch (shapeType)
+//        {
+//        case CustomShapeItem::Rectangle:
+//        case CustomShapeItem::Ellipse:
+//            currentItem->setShapeRect(QRectF(origin, currentPos));
+//            break;
+//        case CustomShapeItem::Line:
+//        case CustomShapeItem::Arrow:
+//            currentItem->setShapeLine(QLineF(origin, currentPos));
+//            break;
+//        }
+//        scene->update();
+//    }
+//    else
+//    {
+//        // Resizing an existing shape using green dot
+//        if (clickedItem && handles.contains(dynamic_cast<QGraphicsEllipseItem*>(clickedItem)))
+//        {
+//            handle = dynamic_cast<QGraphicsEllipseItem*>(clickedItem);
+//            if (handle)
+//            {
+//                handle->setPen(QPen(Qt::green));
+//                handle->setBrush(QBrush(Qt::green));
+
+//                resizableShapeItem = dynamic_cast<CustomShapeItem*>(handle->parentItem());
+//                resizableShapeItem->setFlag(QGraphicsItem::ItemIsMovable, false);
+//                if (!resizableShapeItem)
+//                {
+//                    qDebug() << "Error: Parent Item is nullptr.";
+//                    return;
+//                }
+
+//                QRectF originalRect = resizableShapeItem->boundingRect();
+//                QRectF newRect = originalRect;
+
+//                // Adjust the shape's rectangle based on which green handle is being moved
+//                if (handle == handles[0])
+//                {
+//                    qDebug() << "Moving along lefttop";
+//                    newRect.setTopLeft(currentPos);
+//                    newRect.setBottomRight(QPointF(originalRect.bottomRight().x(), originalRect.bottomRight().y()));
+//                }
+//                else if (handle == handles[1])
+//                {
+//                    qDebug() << "Moving along righttop";
+//                    newRect.setTopRight(currentPos);
+//                    newRect.setBottomLeft(QPointF(originalRect.bottomLeft().x(), originalRect.bottomLeft().y()));
+//                }
+//                else if (handle == handles[2])
+//                {
+//                    qDebug() << "Moving along leftbottom";
+//                    newRect.setBottomLeft(currentPos);
+//                    newRect.setTopRight(QPointF(originalRect.topRight().x(), originalRect.topRight().y()));
+//                }
+//                else if (handle == handles[3])
+//                {
+//                    qDebug() << "Moving along rightbottom";
+//                    newRect.setBottomRight(currentPos);
+//                }
+
+//                // Update the shape's rectangle
+//                resizableShapeItem->setShapeRect(newRect);
+
+//                // Automatically update the blue handles according to the new shape size
+////                updateBlueHandles(resizableShapeItem);
+
+//                scene->update();
+//            }
+//        }
+//    }
+//}
+
 
 void MainWindow::onGraphicsViewMouseReleased(QMouseEvent *event/*, QPainter *painter*/)
 {
@@ -418,12 +575,51 @@ void MainWindow::onGraphicsViewMouseReleased(QMouseEvent *event/*, QPainter *pai
                     rect.setSize(QSizeF(20, 20));
                     shapeItem->setShapeRect(rect);
                 }
+
+                addBlueHandles(shapeItem);
             }
         }
-        currentItem->setFlag(QGraphicsItem::ItemIsMovable, true);
-        currentItem = nullptr;
+        if (currentItem)
+        {
+            currentItem->setFlag(QGraphicsItem::ItemIsMovable, true);
+            currentItem = nullptr;
+        }
     }
+//    if (resizableShapeItem && event->button() == Qt::LeftButton)
+//    {
+//        qDebug() << "Resizing completed";
+//        removeHandles();
+//        addBlueHandles(resizableShapeItem);
+//        resizableShapeItem->setFlag(QGraphicsItem::ItemIsMovable, true);
+//        resizableShapeItem = nullptr;
+//        handle = nullptr;
+//    }
 }
+
+//void MainWindow::updateBlueHandles(CustomShapeItem* shapeItem)
+//{
+//    // Remove existing blue handles
+//    for (QGraphicsEllipseItem* h : handles)
+//    {
+//        scene->removeItem(h);
+//        delete h;
+//    }
+//    handles.clear();
+
+//    // Add new blue handles based on the resized shape
+//    addBlueHandles(shapeItem);
+//}
+
+//void MainWindow::removeHandles()
+//{
+//    // Remove existing handles from the scene
+//    for (QGraphicsEllipseItem* h : handles)
+//    {
+//        scene->removeItem(h);
+//        delete h;
+//    }
+//    handles.clear();
+//}
 
 
 void MainWindow::on_tabWidget_tabBarClicked(int index)
@@ -508,4 +704,90 @@ void MainWindow::on_actionRight_triggered()
         }
     }
 }
+
+
+void MainWindow::addBlueHandles(CustomShapeItem* shapeItem)
+{
+    for (auto handle : handles)
+    {
+        scene->removeItem(handle);
+        delete handle;
+    }
+    handles.clear();
+
+    if (!shapeItem)
+    {
+        qDebug() << "Error: shapeItem is nullptr.";
+        return;
+    }
+    //    QRectF boundingRect = shapeItem->boundingRect();
+
+    QGraphicsEllipseItem* topLeftHandle = new QGraphicsEllipseItem(-3, -3, 6, 6, shapeItem);
+    topLeftHandle->setBrush(QBrush(Qt::blue));
+    topLeftHandle->setFlag(QGraphicsItem::ItemIsMovable);
+    topLeftHandle->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+    handles.push_back(topLeftHandle);
+
+    QGraphicsEllipseItem* topRightHandle = new QGraphicsEllipseItem(-3, -3, 6, 6, shapeItem);
+    topRightHandle->setBrush(QBrush(Qt::blue));
+    topRightHandle->setFlag(QGraphicsItem::ItemIsMovable);
+    topRightHandle->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+    handles.push_back(topRightHandle);
+
+    QGraphicsEllipseItem* bottomLeftHandle = new QGraphicsEllipseItem(-3, -3, 6, 6, shapeItem);
+    bottomLeftHandle->setBrush(QBrush(Qt::blue));
+    bottomLeftHandle->setFlag(QGraphicsItem::ItemIsMovable);
+    bottomLeftHandle->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+    handles.push_back(bottomLeftHandle);
+
+    QGraphicsEllipseItem* bottomRightHandle = new QGraphicsEllipseItem(-3, -3, 6, 6, shapeItem);
+    bottomRightHandle->setBrush(QBrush(Qt::blue));
+    bottomRightHandle->setFlag(QGraphicsItem::ItemIsMovable);
+    bottomRightHandle->setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+    handles.push_back(bottomRightHandle);
+
+    updateHandlesPosition(shapeItem);
+
+    for (auto handle : handles)
+    {
+        scene->addItem(handle);
+    }
+}
+
+//void MainWindow::addBlueHandles(CustomShapeItem* shapeItem)
+//{
+//    // Implement logic to add blue handles based on the bounding rect of the shapeItem
+//    QRectF rect = shapeItem->boundingRect();
+
+//    // Assuming handles[0] to handles[3] correspond to the four corners or sides
+//    handles.append(addHandleAt(rect.topLeft(), Qt::blue));
+//    handles.append(addHandleAt(rect.topRight(), Qt::blue));
+//    handles.append(addHandleAt(rect.bottomLeft(), Qt::blue));
+//    handles.append(addHandleAt(rect.bottomRight(), Qt::blue));
+//}
+
+QGraphicsEllipseItem* MainWindow::addHandleAt(const QPointF& position, const QColor& color)
+{
+    QGraphicsEllipseItem* handle = new QGraphicsEllipseItem(-5, -5, 10, 10);
+    handle->setBrush(QBrush(color));
+    handle->setPen(QPen(color));
+    handle->setPos(position);
+    scene->addItem(handle);
+    return handle;
+}
+
+void MainWindow::updateHandlesPosition(CustomShapeItem* shapeItem)
+{
+    if (!shapeItem)
+    {
+        return;
+    }
+
+    QRectF rect = shapeItem->getShapeRect();
+    handles[0]->setPos(rect.topLeft() - QPointF(3, 3));
+    handles[1]->setPos(rect.topRight() - QPointF(3, 3));
+    handles[2]->setPos(rect.bottomLeft() - QPointF(3, 3));
+    handles[3]->setPos(rect.bottomRight() - QPointF(3, 3));
+}
+
 

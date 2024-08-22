@@ -36,11 +36,10 @@ private:
     enum HandleType { TopLeft, TopRight, BottomLeft, BottomRight, MiddleLeft, MiddleRight, TopCenter, BottomCenter };
     QVector<QGraphicsEllipseItem*> handles;
 
-    void updateHandles();
-    void addHandles();
-    void removeHandles();
-    HandleType handleAt(const QPointF &point) const;
-    void resizeShape(HandleType handleType, const QPointF &newPos);
+//    void addHandles();
+
+
+
 };
 
 #endif // CUSTOMSHAPEITEM_H

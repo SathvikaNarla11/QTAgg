@@ -1,4 +1,5 @@
 #include "customshapeitem.h"
+#include "customgraphicsview.h"
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
 #include <QStyleOptionGraphicsItem>
@@ -8,6 +9,7 @@ CustomShapeItem::CustomShapeItem(ShapeType shapeType, QGraphicsItem *parent)
     : QGraphicsItem(parent), shapeType(shapeType)
 {
     setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable | QGraphicsItem::ItemSendsGeometryChanges);
+
 }
 
 QRectF CustomShapeItem::boundingRect() const
@@ -72,9 +74,10 @@ void CustomShapeItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
         painter->setPen(QPen(Qt::DashLine));
         painter->setBrush(Qt::NoBrush);
         painter->drawRect(boundingRect());
-        addHandles();
+
     }
 }
+
 
 void CustomShapeItem::setShapeRect(const QRectF &rect)
 {
@@ -124,175 +127,125 @@ void CustomShapeItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
-void CustomShapeItem::addHandles()
-{
-    removeHandles();
-    if (shapeType == Rectangle || shapeType == Ellipse)
-    {
-        handles.append(new QGraphicsEllipseItem(QRectF(-5, -5, 10, 10), this));
-        handles.append(new QGraphicsEllipseItem(QRectF(-5, -5, 10, 10), this));
-        handles.append(new QGraphicsEllipseItem(QRectF(-5, -5, 10, 10), this));
-        handles.append(new QGraphicsEllipseItem(QRectF(-5, -5, 10, 10), this));
-    }
-    else if (shapeType == Line)
-    {
-        handles.append(new QGraphicsEllipseItem(QRectF(-5, -5, 10, 10), this));
-        handles.append(new QGraphicsEllipseItem(QRectF(-5, -5, 10, 10), this));
-    }
-    updateHandles();
-}
 
-void CustomShapeItem::removeHandles()
-{
-    qDeleteAll(handles);
-    handles.clear();
-}
+/*#include <QGraphicsSceneMouseEvent>
+#include <QGraphicsRectItem>
+#include <QGraphicsEllipseItem>
+#include <QGraphicsLineItem>
+#include <QLineF>
 
-void CustomShapeItem::updateHandles()
+class ResizeHandle : public QGraphicsItem
 {
-    for (int i = 0; i < handles.size(); ++i)
+    Q_OBJECT
+
+public:
+    enum ResizeCorner { TopLeft, TopRight, BottomLeft, BottomRight };
+
+    ResizeHandle(QGraphicsItem *resizeItem, ResizeCorner corner, QGraphicsItem *parent = nullptr)
+        : QGraphicsItem(parent), m_resizeItem(resizeItem), m_resizeCorner(corner), m_isResizingStart(false) {}
+
+    void setResizeItem(QGraphicsItem *item) { m_resizeItem = item; }
+    void setResizeCorner(ResizeCorner corner) { m_resizeCorner = corner; }
+
+protected:
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+
+private:
+    QGraphicsItem *m_resizeItem;
+    ResizeCorner m_resizeCorner;
+    bool m_isResizingStart;
+};
+
+void ResizeHandle::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    if (m_resizeItem)
     {
-        QGraphicsEllipseItem *handle = handles[i];
-        if (shapeType == Rectangle || shapeType == Ellipse)
+        QPointF newPos = mapToParent(event->pos());
+
+        if (auto rectItem = dynamic_cast<QGraphicsRectItem*>(m_resizeItem))
         {
-            switch (i)
+            QRectF oldRect = rectItem->rect();
+            QPointF topLeft = oldRect.topLeft();
+            QPointF bottomRight = oldRect.bottomRight();
+
+            // Determine which corner is being resized
+            if (m_resizeCorner == TopLeft)
             {
-            case TopLeft:
-                handle->setPos(shapeRect.topLeft());
-                break;
-            case TopRight:
-                handle->setPos(shapeRect.topRight());
-                break;
-            case BottomLeft:
-                handle->setPos(shapeRect.bottomLeft());
-                break;
-            case BottomRight:
-                handle->setPos(shapeRect.bottomRight());
-                break;
+                topLeft = newPos;
             }
+            else if (m_resizeCorner == TopRight)
+            {
+                topLeft.setY(newPos.y());
+                bottomRight.setX(newPos.x());
+            }
+            else if (m_resizeCorner == BottomLeft)
+            {
+                topLeft.setX(newPos.x());
+                bottomRight.setY(newPos.y());
+            }
+            else if (m_resizeCorner == BottomRight)
+            {
+                bottomRight = newPos;
+            }
+
+            QRectF newRect(topLeft, bottomRight);
+            rectItem->setRect(newRect.normalized());
         }
-        else if (shapeType == Line)
+        else if (auto ellipseItem = dynamic_cast<QGraphicsEllipseItem*>(m_resizeItem))
         {
-            if (i == 0)
-                handle->setPos(shapeLine.p1());
-            else if (i == 1)
-                handle->setPos(shapeLine.p2());
+            QRectF oldRect = ellipseItem->rect();
+            QPointF topLeft = oldRect.topLeft();
+            QPointF bottomRight = oldRect.bottomRight();
+
+            // Determine which corner is being resized
+            if (m_resizeCorner == TopLeft)
+            {
+                topLeft = newPos;
+            }
+            else if (m_resizeCorner == TopRight)
+            {
+                topLeft.setY(newPos.y());
+                bottomRight.setX(newPos.x());
+            }
+            else if (m_resizeCorner == BottomLeft)
+            {
+                topLeft.setX(newPos.x());
+                bottomRight.setY(newPos.y());
+            }
+            else if (m_resizeCorner == BottomRight)
+            {
+                bottomRight = newPos;
+            }
+
+            QRectF newRect(topLeft, bottomRight);
+            ellipseItem->setRect(newRect.normalized());
         }
-    }
-}
-
-CustomShapeItem::HandleType CustomShapeItem::handleAt(const QPointF &point) const
-{qDebug()<<"handleAt";
-    for (int i = 0; i < handles.size(); ++i)
-    {
-        qDebug()<<"handleAt...";
-        if (handles[i]->contains(point))
-            return static_cast<HandleType>(i);
-    }
-    return TopLeft; // Default
-}
-
-void CustomShapeItem::resizeShape(HandleType handleType, const QPointF &newPos)
-{
-    qDebug()<<"resizeShape";
-    if (shapeType == Rectangle || shapeType == Ellipse)
-    {
-        qDebug()<<"resizeShape...";
-        switch (handleType)
+        else if (auto lineItem = dynamic_cast<QGraphicsLineItem*>(m_resizeItem))
         {
-        case TopLeft:
-            shapeRect.setTopLeft(newPos);
-            break;
-        case TopRight:
-            shapeRect.setTopRight(newPos);
-            break;
-        case BottomLeft:
-            shapeRect.setBottomLeft(newPos);
-            break;
-        case BottomRight:
-            shapeRect.setBottomRight(newPos);
-            break;
+            QPointF handlePos = mapToParent(event->pos());
+            if (QLineF(handlePos, lineItem->line().p1()).length() < QLineF(handlePos, lineItem->line().p2()).length())
+            {
+                m_isResizingStart = true;
+            }
+            else
+            {
+                m_isResizingStart = false;
+            }
+
+            QLineF line = lineItem->line();
+            if (m_isResizingStart)
+            {
+                line.setP1(mapToScene(event->pos()));
+            }
+            else
+            {
+                line.setP2(mapToScene(event->pos()));
+            }
+            lineItem->setLine(line);
         }
+
+        m_resizeItem->update();
     }
-    else if (shapeType == Line)
-    {
-        if (handleType == TopLeft)
-            shapeLine.setP1(newPos);
-        else if (handleType == BottomLeft)
-            shapeLine.setP2(newPos);
-    }
-    prepareGeometryChange();
-    update();
-}
 
-
-//QPolygonF CustomShapeItem::scaledPolygon(const QPolygonF& old, CustomShapeItem::Direction direction, const QPointF& newPos)
-//{
-//    qreal oldWidth = old.boundingRect().width();
-//    qreal oldHeight = old.boundingRect().height();
-//    qreal scaleWidth, scaleHeight;
-//    switch(direction)
-//    {
-//    case TopLeft:
-//    {
-//        QPointF fixPoint = old.boundingRect().bottomRight();
-//        scaleWidth = (fixPoint.x() - newPos.x()) / oldWidth;
-//        scaleHeight = (fixPoint.y() - newPos.y()) / oldHeight;
-//        break;
-//    }
-//    case Top:
-//    {
-//        QPointF fixPoint = old.boundingRect().bottomLeft();
-//        scaleWidth = 1;
-//        scaleHeight = (fixPoint.y() - newPos.y()) / oldHeight;
-//        break;
-//    }
-//    case TopRight:
-//    {
-//        QPointF fixPoint = old.boundingRect().bottomLeft();
-//        scaleWidth = (newPos.x() - fixPoint.x()) / oldWidth;
-//        scaleHeight = (fixPoint.y() - newPos.y() ) / oldHeight;
-//        break;
-//    }
-//    case Right:
-//    {
-//        QPointF fixPoint = old.boundingRect().bottomLeft();
-//        scaleWidth = (newPos.x() - fixPoint.x()) / oldWidth;
-//        scaleHeight = 1;
-//        break;
-//    }
-//    case BottomRight:
-//    {
-//        QPointF fixPoint = old.boundingRect().topLeft();
-//        scaleWidth = (newPos.x() - fixPoint.x()) / oldWidth;
-//        scaleHeight = (newPos.y() - fixPoint.y()) / oldHeight;
-//        break;
-//    }
-//    case Bottom:
-//    {
-//        QPointF fixPoint = old.boundingRect().topLeft();
-//        scaleWidth = 1;
-//        scaleHeight = (newPos.y() - fixPoint.y()) / oldHeight;
-//        break;
-//    }
-//    case BottomLeft: {
-//        QPointF fixPoint = old.boundingRect().topRight();
-//        scaleWidth = (fixPoint.x() - newPos.x()) / oldWidth;
-//        scaleHeight = (newPos.y() - fixPoint.y()) / oldHeight;
-//        break;
-//    }
-//    case Left:
-//    {
-//        QPointF fixPoint = old.boundingRect().bottomRight();
-//        scaleWidth = (fixPoint.x() - newPos.x()) / oldWidth;
-//        scaleHeight = 1;
-//        break;
-//    }
-//    }
-//    QTransform trans;
-//    trans.scale(scaleWidth, scaleHeight);
-//    return trans.map(old);
-//}
-
-
-
+    QGraphicsItem::mouseMoveEvent(event);
+}*/
