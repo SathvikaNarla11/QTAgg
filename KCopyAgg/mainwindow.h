@@ -37,7 +37,7 @@ public:
     QGraphicsItem* itemUnderMouse = nullptr;
     QGraphicsItem* clickedItem = nullptr;
     void removeHandles();
-    QGraphicsEllipseItem* addHandleAt(const QPointF& position, const QColor& color);
+    QGraphicsEllipseItem* addHandleAt(const QPointF& position, const QColor& color, QGraphicsItem* parent);
     void updateBlueHandles(CustomShapeItem* shapeItem);
 
 private slots:
