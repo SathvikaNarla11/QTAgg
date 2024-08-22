@@ -19,6 +19,10 @@ public:
     QLineF getShapeLine() const;
     void setShapeLine(const QLineF &line);
     ShapeType getShapeType() const;
+    ShapeType shapeType;
+
+    void setPen(const QPen &pen) { m_pen = pen; update(); }
+    QPen pen() const { return m_pen; }
 
 signals:
 
@@ -29,14 +33,15 @@ protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 private:
-    ShapeType shapeType;
+
     QRectF shapeRect;
     QLineF shapeLine;
+    QPen m_pen;
 
     enum HandleType { TopLeft, TopRight, BottomLeft, BottomRight, MiddleLeft, MiddleRight, TopCenter, BottomCenter };
     QVector<QGraphicsEllipseItem*> handles;
 
-//    void addHandles();
+    //    void addHandles();
 
 
 

@@ -45,6 +45,12 @@ void CustomGraphicsView::mouseReleaseEvent(QMouseEvent *event)
     QGraphicsView::mouseReleaseEvent(event);
 }
 
+//void CustomGraphicsView::mouseDoubleClickEvent(QMouseEvent *event)
+//{
+//    emit mouseDoubleClick(event);
+//    QGraphicsView::mouseDoubleClickEvent(event);
+//}
+
 void CustomGraphicsView::dragEnterEvent(QDragEnterEvent *event)
 {
     qDebug() << "Drag enter";

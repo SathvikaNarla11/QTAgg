@@ -15,6 +15,7 @@ signals:
     void mousePressed(QMouseEvent *event);
     void mouseMoved(QMouseEvent *event);
     void mouseReleased(QMouseEvent *event);
+//    void mouseDoubleClick(QMouseEvent *event);
 
 protected:
 
@@ -25,6 +26,7 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
+//    void mouseDoubleClickEvent(QMouseEvent *event) override;
 
 private:
     void addPointsToItem(QGraphicsPixmapItem* item, int width, int height);

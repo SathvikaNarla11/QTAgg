@@ -39,17 +39,15 @@ public:
     void removeHandles();
     QGraphicsEllipseItem* addHandleAt(const QPointF& position, const QColor& color, QGraphicsItem* parent);
     void updateBlueHandles(CustomShapeItem* shapeItem);
+    void addEndpointsHandles(CustomShapeItem* lineItem);
+    QList<QGraphicsEllipseItem*> endpoints;
 
 private slots:
-    //        void undo();
-    //        void redo();
-
-
-
     void onGraphicsViewMousePressed(QMouseEvent *event);
     void onGraphicsViewMouseMoved(QMouseEvent *event);
-    void onGraphicsViewMouseReleased(QMouseEvent *event/*, QPainter *painter*/);
+    void onGraphicsViewMouseReleased(QMouseEvent *event);
     void onPushButtonClicked();
+    void changeLineWidth();
 
 
     void on_tabWidget_tabBarClicked(int index);

@@ -179,5 +179,19 @@
         <file>MenuIcons/zoomIn.png</file>
         <file>MenuIcons/zoomnormal.png</file>
         <file>MenuIcons/zoomout.png</file>
+        <file>RightClickShape/bringForward.png</file>
+        <file>RightClickShape/fillColor.png</file>
+        <file>RightClickShape/lineColor.png</file>
+        <file>RightClickShape/lineWidth.png</file>
+        <file>RightClickShape/sendBack.png</file>
+        <file>RightClickShape/transparent.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>RightClickShape/bringForward.png</file>
+        <file>RightClickShape/fillColor.png</file>
+        <file>RightClickShape/lineColor.png</file>
+        <file>RightClickShape/lineWidth.png</file>
+        <file>RightClickShape/sendBack.png</file>
+        <file>RightClickShape/transparent.png</file>
     </qresource>
 </RCC>
