@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/Icons">
+        <file>DragDropIcons/BtnIcons/btn1.png</file>
+        <file>DragDropIcons/BtnIcons/btn2.png</file>
+        <file>DragDropIcons/BtnIcons/btn3.png</file>
+        <file>DragDropIcons/BtnIcons/btn4.png</file>
+        <file>DragDropIcons/BtnIcons/btn5.png</file>
+        <file>DragDropIcons/BtnIcons/btn6.png</file>
+        <file>DragDropIcons/BtnIcons/btn7.png</file>
+        <file>DragDropIcons/BtnIcons/btn8.png</file>
+        <file>DragDropIcons/BtnIcons/btn9.png</file>
+        <file>DragDropIcons/BtnIcons/btn10.png</file>
+        <file>DragDropIcons/BtnIcons/btn11.png</file>
+        <file>DragDropIcons/BtnIcons/btn12.png</file>
+        <file>DragDropIcons/BtnIcons/btn13.png</file>
+        <file>DragDropIcons/BtnIcons/paintBucket.png</file>
+        <file>DragDropIcons/Btn14-List/adjustable_text.png</file>
+        <file>DragDropIcons/Btn14-List/arrow.png</file>
+        <file>DragDropIcons/Btn14-List/ellipse.png</file>
+        <file>DragDropIcons/Btn14-List/erase_color.png</file>
+        <file>DragDropIcons/Btn14-List/line.png</file>
+        <file>DragDropIcons/Btn14-List/multi_line_notes.png</file>
+        <file>DragDropIcons/Btn14-List/paint_brush.png</file>
+        <file>DragDropIcons/Btn14-List/polyline.png</file>
+        <file>DragDropIcons/Btn14-List/rectangle.png</file>
+        <file>DragDropIcons/Btn14-List/reset_to_pointer_default_mouse_function.png</file>
+        <file>DragDropIcons/Btn14-List/select_color_for_paint_brush.png</file>
+        <file>DragDropIcons/Btn14-List/symbols_open_to_select_model.png</file>
+    </qresource>
+</RCC>
