@@ -1,4 +1,4 @@
-QT       += core gui
+QT += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,16 +13,19 @@ SOURCES += \
     customgraphicsview.cpp \
     customshapeitem.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    rundialog.cpp
 
 HEADERS += \
     customdelegate.h \
     customgraphicsview.h \
     customshapeitem.h \
-    mainwindow.h
+    mainwindow.h \
+    rundialog.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    rundialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

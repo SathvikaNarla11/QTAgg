@@ -10,6 +10,9 @@
     <height>702</height>
    </rect>
   </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::ActionsContextMenu</enum>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -588,44 +591,33 @@
           </property>
           <widget class="QWidget" name="tab">
            <attribute name="title">
-            <string>page #1</string>
+            <string> Plant Stage #1</string>
            </attribute>
-           <layout class="QGridLayout" name="gridLayout">
-            <property name="leftMargin">
-             <number>0</number>
+           <widget class="CustomGraphicsView" name="graphicsView">
+            <property name="geometry">
+             <rect>
+              <x>730</x>
+              <y>10</y>
+              <width>256</width>
+              <height>192</height>
+             </rect>
             </property>
-            <property name="topMargin">
-             <number>0</number>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
             </property>
-            <property name="rightMargin">
-             <number>0</number>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
             </property>
-            <property name="bottomMargin">
-             <number>0</number>
+            <property name="mouseTracking">
+             <bool>false</bool>
             </property>
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <item row="0" column="0">
-             <widget class="CustomGraphicsView" name="graphicsView">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>16777215</height>
-               </size>
-              </property>
-              <property name="mouseTracking">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           </widget>
           </widget>
           <widget class="QWidget" name="tab_2">
            <attribute name="title">
@@ -752,8 +744,8 @@
     </widget>
     <addaction name="actionRefresh"/>
     <addaction name="separator"/>
-    <addaction name="actionZoom_In_2"/>
-    <addaction name="actionZoom_Out_2"/>
+    <addaction name="actionZoom_In"/>
+    <addaction name="actionZoom_Out"/>
     <addaction name="actionZoom_to_Normal"/>
     <addaction name="actionZoom_to_Fit"/>
     <addaction name="separator"/>
@@ -877,8 +869,8 @@
    <addaction name="separator"/>
    <addaction name="actionGraphical_Undo"/>
    <addaction name="separator"/>
-   <addaction name="actionZoom_In_2"/>
-   <addaction name="actionZoom_Out_2"/>
+   <addaction name="actionZoom_In"/>
+   <addaction name="actionZoom_Out"/>
    <addaction name="actionZoom_to_Normal"/>
    <addaction name="actionZoom_to_Fit"/>
    <addaction name="separator"/>
@@ -1125,7 +1117,7 @@
     <string>Refresh</string>
    </property>
   </action>
-  <action name="actionZoom_In_2">
+  <action name="actionZoom_In">
    <property name="icon">
     <iconset resource="Resources.qrc">
      <normaloff>:/Icons/MenuIcons/zoomIn.png</normaloff>:/Icons/MenuIcons/zoomIn.png</iconset>
@@ -1134,7 +1126,7 @@
     <string>Zoom In</string>
    </property>
   </action>
-  <action name="actionZoom_Out_2">
+  <action name="actionZoom_Out">
    <property name="icon">
     <iconset resource="Resources.qrc">
      <normaloff>:/Icons/MenuIcons/zoomout.png</normaloff>:/Icons/MenuIcons/zoomout.png</iconset>

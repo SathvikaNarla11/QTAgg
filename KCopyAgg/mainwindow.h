@@ -42,12 +42,13 @@ public:
     void addEndpointsHandles(CustomShapeItem* lineItem);
     QList<QGraphicsEllipseItem*> endpoints;
 
+    qreal zoomFactor;
+
 private slots:
     void onGraphicsViewMousePressed(QMouseEvent *event);
     void onGraphicsViewMouseMoved(QMouseEvent *event);
     void onGraphicsViewMouseReleased(QMouseEvent *event);
     void onPushButtonClicked();
-    void changeLineWidth();
 
 
     void on_tabWidget_tabBarClicked(int index);
@@ -62,6 +63,16 @@ private slots:
     void on_actionLeft_triggered();
 
     void on_actionRight_triggered();
+
+    void on_actionZoom_In_triggered();
+
+    void on_actionZoom_Out_triggered();
+
+    void on_actionZoom_to_Normal_triggered();
+
+    void on_actionZoom_to_Fit_triggered();
+
+    void on_tabWidgetMain_tabBarClicked(int index);
 
 protected:
 

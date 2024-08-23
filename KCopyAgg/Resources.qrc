@@ -185,6 +185,7 @@
         <file>RightClickShape/lineWidth.png</file>
         <file>RightClickShape/sendBack.png</file>
         <file>RightClickShape/transparent.png</file>
+        <file>RightClickShape/run_ui_icon.png</file>
     </qresource>
     <qresource prefix="/">
         <file>RightClickShape/bringForward.png</file>
