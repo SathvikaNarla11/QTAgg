@@ -658,18 +658,14 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
     QTabWidget* tabWidget = ui->tabWidget;
     int tabCount = tabWidget->count();
 
-    // Check if the clicked tab is the last tab
     if (index == tabCount - 1)
     {
         qDebug() << "Adding new tab at index:" << index;
 
-        // Create a new QWidget for the new tab
         QWidget* newTab = new QWidget();
 
-        // Create a new QTabWidget to be added inside the new tab
         QTabWidget* innerTabWidget = new QTabWidget(newTab);
 
-        // Create a CustomGraphicsView and QGraphicsScene for the first inner tab
         QWidget* innerTab1 = new QWidget();
         CustomGraphicsView* graphicsView1 = new CustomGraphicsView(innerTab1);
         QGraphicsScene* scene1 = new QGraphicsScene(graphicsView1);
@@ -681,14 +677,11 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
         layout1->addWidget(graphicsView1);
         innerTab1->setLayout(layout1);
 
-        // Add the CustomGraphicsView tab to the innerTabWidget
         innerTabWidget->addTab(innerTab1, "Inner Tab 1");
 
-        // Create an "Add New" tab placeholder
         QWidget* addNewTab = new QWidget();
         innerTabWidget->addTab(addNewTab, "Add New");
 
-        // Connect the tab change signal to handle "Add New" clicks
         connect(innerTabWidget, &QTabWidget::currentChanged, [this, innerTabWidget](int index) {
             if (innerTabWidget->tabText(index) == "Add New") {
                 // Add new tab to innerTabWidget with CustomGraphicsView
@@ -806,63 +799,4 @@ void MainWindow::on_actionZoom_to_Fit_triggered()
 {
     ui->graphicsView->fitInView(ui->graphicsView->sceneRect(), Qt::KeepAspectRatio);
     zoomFactor = 1.5;
-}
-
-void MainWindow::on_tabWidgetMain_tabBarClicked(int index)
-{
-    //    int outerTabCount = ui->tabWidgetMain->count();
-
-    //    // Check if the clicked tab is the one where you want to add new tabs (e.g., "tab2")
-    //    if (index == 1) // Assuming tab2 is at index 1
-    //    {
-    //        // Get the widget at the clicked index
-    //        QWidget *innerTabContainer = ui->tabWidgetMain->widget(index);
-
-    //        // Debugging output
-    //        if (innerTabContainer) {
-    //            qDebug() << "Inner tab container found at index" << index;
-    //            qDebug() << "Widget class name:" << innerTabContainer->metaObject()->className();
-    //        } else {
-    //            qDebug() << "No widget found at index" << index;
-    //            return; // Early exit if no widget is found
-    //        }
-
-    //        // Attempt to cast to QTabWidget
-    //        QTabWidget *innerTabWidget = qobject_cast<QTabWidget*>(innerTabContainer);
-
-    //        // Check if the casting was successful
-    //        if (innerTabWidget) {
-    //            qDebug() << "Successfully casted to QTabWidget";
-
-    //            int innerTabCount = innerTabWidget->count();
-
-    //            // Add a new tab to the inner QTabWidget
-    //            QWidget *newTab = new QWidget();
-    //            innerTabWidget->addTab(newTab, "add new");
-
-    //            // Setup layout for the new tab
-    //            QVBoxLayout *layout = new QVBoxLayout(newTab);
-    //            layout->setContentsMargins(0, 0, 0, 0);
-
-    //            // Create and set up the new QGraphicsView and scene
-    //            CustomGraphicsView *newGraphicsView = new CustomGraphicsView(newTab);
-    //            QGraphicsScene *sceneTab = new QGraphicsScene(newGraphicsView);
-    //            newGraphicsView->setScene(sceneTab);
-
-    //            // Adjust the scene rect based on the size of the QGraphicsView
-    //            sceneTab->setSceneRect(newGraphicsView->rect());
-    //            newGraphicsView->setRenderHints(QPainter::Antialiasing);
-
-    //            // Add QGraphicsView to the layout
-    //            layout->addWidget(newGraphicsView);
-
-    //            // Optionally, set the newly added tab as the current tab
-    //            innerTabWidget->setCurrentIndex(innerTabWidget->indexOf(newTab));
-
-    //            // Update the tab text of the newly added tab
-    //            innerTabWidget->setTabText(innerTabWidget->indexOf(newTab), QString("page #%1").arg(innerTabCount + 1));
-    //        } else {
-    //            qDebug() << "Failed to cast to QTabWidget";
-    //        }
-    //    }
 }

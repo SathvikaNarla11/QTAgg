@@ -136,6 +136,7 @@ void CustomShapeItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 //            connect(lineWidthAction, &QAction::triggered, this, &CustomShapeItem::changeLineWidth);
             contextMenu->exec(event->screenPos());
+            changeLineWidth();
 
             delete contextMenu;
         }

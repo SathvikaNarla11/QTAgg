@@ -72,8 +72,6 @@ private slots:
 
     void on_actionZoom_to_Fit_triggered();
 
-    void on_tabWidgetMain_tabBarClicked(int index);
-
 protected:
 
 private:
